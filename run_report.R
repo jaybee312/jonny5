@@ -27,8 +27,7 @@ cat("Step 3/4: Fitting fuel models and generating forecasts...\n")
 source("03_fuel_forecast.R")
 cat("\n")
 
-cat("Step 4/4: Regenerating Jonny 5...\n")
-source("generate_jonny5.R")
+cat("Step 3/3: Regenerating Jonny 5...\n")
 cat("\n")
 
 end_time <- Sys.time()

@@ -252,7 +252,7 @@ cat("═════════════════════════
 
 fuel_scenarios %>%
   group_by(scenario, target) %>%
-  summarise(avg_price = round(mean(point_forecast), 3), .groups = "drop") %>%
+  summarise(avg_price = round(mean(point_forecast, na.rm=TRUE), 3), .groups = "drop") %>%
   pivot_wider(names_from = target, values_from = avg_price) %>%
   print()
 
