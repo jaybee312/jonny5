@@ -1,4 +1,6 @@
----
+
+
+
 
 # Problem Solving with Jonny 5
 
@@ -56,4 +58,3 @@ Built by the same quantitative system that fed Wall Street earnings guidance at 
 
 Want Jonny 5 running on your actual business data? [Let's talk.](mailto:jmizel312@gmail.com)
 
----
