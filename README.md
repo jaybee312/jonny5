@@ -1,5 +1,3 @@
-Yes. Here's the exact README text. Copy and paste it directly into the GitHub editor:
-
 ---
 
 # Problem Solving with Jonny 5
