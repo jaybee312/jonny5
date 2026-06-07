@@ -210,50 +210,33 @@ tr:hover td{background:#f8f9fa;}
 <tr><td>Fruits & Vegetables</td><td>5.1%</td><td>High</td><td>Lock in now</td></tr></table>
   </div>
   <div class="calc-box">
-    <h4>Margin Impact Calculator</h4>
-    <p class="calc-desc">See how forecasted food cost pressure hits your bottom line.</p>
-    <div class="input-row">
-      <div class="input-col"><label>Weekly Food Cost ($)</label><input type="number" id="r_cost" value="5000" min="500" oninput="calcRest()"></div>
-      <div class="input-col"><label>Current Food Cost %</label><input type="number" id="r_pct" value="30" min="15" max="50" oninput="calcRest()"></div>
-      <div class="input-col"><label>Target Food Cost %</label><input type="number" id="r_target" value="30" min="15" max="50" oninput="calcRest()"></div>
-    </div>
-    <div class="out-row">
-      <div class="out-item"><span class="stat-l">Weekly Revenue</span><span class="stat-v" id="r_rev">—</span></div>
-      <div class="out-item"><span class="stat-l">Projected Cost Increase</span><span class="stat-v" id="r_inc">—</span></div>
-      <div class="out-item"><span class="stat-l">New Food Cost %</span><span class="stat-v" id="r_new">—</span></div>
-      <div class="out-item hl" id="r_impact_box"><span class="stat-l">Annual Margin Impact</span><span class="stat-v" id="r_annual">—</span></div>
-    </div>
-    <div id="r_verdict"></div>
+<h4>Margin Impact Calculator — By Food Segment</h4>
+  <p class="calc-desc">Enter your weekly spend by category. Each segment uses its actual upstream pressure signal from the GPPI. Total margin impact reflects your specific product mix.</p>
+  <div class="input-row">
+    <div class="input-col"><label>Proteins — ($/week)<br><small style="color:#FF9800;font-weight:600;" id="r_protein_signal">Moderate pressure</small></label><input type="number" id="r_protein" value="2000" min="0" oninput="calcRest()"></div>
+    <div class="input-col"><label>Dairy — ($/week)<br><small style="color:#F44336;font-weight:600;" id="r_dairy_signal">High pressure</small></label><input type="number" id="r_dairy" value="800" min="0" oninput="calcRest()"></div>
+    <div class="input-col"><label>Produce — ($/week)<br><small style="color:#F44336;font-weight:600;" id="r_produce_signal">High pressure</small></label><input type="number" id="r_produce" value="700" min="0" oninput="calcRest()"></div>
+    <div class="input-col"><label>Dry Goods — ($/week)<br><small style="color:#FF9800;font-weight:600;" id="r_dry_signal">Moderate pressure</small></label><input type="number" id="r_dry" value="500" min="0" oninput="calcRest()"></div>
+  </div>
+  <div class="out-row">
+    <div class="out-item"><span class="stat-l">Total Weekly Food Cost</span><span class="stat-v" id="r_total">$4,000</span></div>
+    <div class="out-item"><span class="stat-l">Projected Cost Increase</span><span class="stat-v" id="r_inc">--</span></div>
+    <div class="out-item"><span class="stat-l">Highest Risk Category</span><span class="stat-v" id="r_top_risk">--</span></div>
+    <div class="out-item hl" id="r_impact_box"><span class="stat-l">Annual Margin Impact</span><span class="stat-v" id="r_annual">--</span></div>
+  </div>
+  <div class="out-row" style="margin-top:8px;">
+    <div class="out-item"><span class="stat-l">Proteins Impact/yr</span><span class="stat-v" id="r_protein_impact">--</span></div>
+    <div class="out-item"><span class="stat-l">Dairy Impact/yr</span><span class="stat-v" id="r_dairy_impact">--</span></div>
+    <div class="out-item"><span class="stat-l">Produce Impact/yr</span><span class="stat-v" id="r_produce_impact">--</span></div>
+    <div class="out-item"><span class="stat-l">Dry Goods Impact/yr</span><span class="stat-v" id="r_dry_impact">--</span></div>
+  </div>
+  <div id="r_verdict"></div>
   </div>
 </div>
-
-<div id="tab-ecomm" class="content">
-  <div class="tool-intro">
-    <h3>What do you need to order and when?</h3>
-    <p>Stockouts do not happen because demand spikes unexpectedly. They happen because nobody did the math far enough in advance.</p>
-  </div>
-  <div class="calc-box">
-    <h4>Inventory Risk Calculator</h4>
-    <div class="input-row">
-      <div class="input-col"><label>Current Inventory (units)</label><input type="number" id="e_inv" value="500" min="0" oninput="calcEcomm()"></div>
-      <div class="input-col"><label>Average Weekly Sales (units)</label><input type="number" id="e_sales" value="50" min="1" oninput="calcEcomm()"></div>
-      <div class="input-col"><label>Supplier Lead Time (weeks)</label><input type="number" id="e_lead" value="4" min="1" max="26" oninput="calcEcomm()"></div>
-      <div class="input-col"><label>Revenue Per Unit ($)</label><input type="number" id="e_rev" value="35" min="1" oninput="calcEcomm()"></div>
-    </div>
-    <div class="out-row">
-      <div class="out-item"><span class="stat-l">Weeks of Supply</span><span class="stat-v" id="e_weeks">—</span></div>
-      <div class="out-item"><span class="stat-l">Reorder Point</span><span class="stat-v" id="e_rp">—</span></div>
-      <div class="out-item"><span class="stat-l">Recommended Order</span><span class="stat-v" id="e_qty">—</span></div>
-      <div class="out-item hl" id="e_risk_box"><span class="stat-l">Revenue at Risk</span><span class="stat-v" id="e_risk">—</span></div>
-    </div>
-    <div id="e_verdict"></div>
-  </div>
-</div>
-
 <div id="tab-outlook" class="content active">
   <div class="tool-intro">
-    <h3>Where the numbers come from</h3>
-    <p>The calculators give you a verdict. This tab shows you why — live macro signals updated weekly from public data sources.</p>
+    <h3>The signals your costs follow — before you feel them</h3>
+    <p>Crude oil moves first. Diesel follows within 1-2 weeks. Freight costs adjust within 2-4 weeks. Your supplier invoices reflect it 4-8 weeks later. These are the live readings — updated weekly.</p>
   </div>
   <div class="insight-box">
     <span class="insight-icon">💡</span>
@@ -481,6 +464,7 @@ function initCharts(){
   });
   var gppiLabels=["2025-06-01","2025-07-01","2025-08-01","2025-09-01","2025-10-01","2025-11-01","2025-12-01","2026-01-01","2026-02-01","2026-03-01","2026-04-01","2026-05-01","2026-06-01"];
   var gppiData=[-0.097,-0.048,0.067,0.116,0.028,0.051,-0.044,-0.448,0.008,0.854,1.143,1.049,0];
+  var lastNonZero=gppiData.length;while(lastNonZero>0&&(gppiData[lastNonZero-1]===0||gppiData[lastNonZero-1]===null))lastNonZero--;gppiLabels=gppiLabels.slice(0,lastNonZero);gppiData=gppiData.slice(0,lastNonZero);
   gppiChartObj=new Chart(document.getElementById("gppiChart"),{
     type:"line",
     data:{labels:gppiLabels,datasets:[{
@@ -560,23 +544,60 @@ function calcFleet(){
   document.getElementById("f_verdict").innerHTML=v;
 }
 
+
+
 function calcRest(){
-  var cost=parseFloat(document.getElementById("r_cost").value)||5000;
-  var pct=parseFloat(document.getElementById("r_pct").value)||30;
-  var target=parseFloat(document.getElementById("r_target").value)||30;
-  var rev=cost/(pct/100);var newCost=cost*(1+GPPI_PCT/100);
-  var inc=newCost-cost;var newPct=(newCost/rev)*100;var annual=inc*52;
-  document.getElementById("r_rev").textContent="$"+Math.round(rev).toLocaleString();
-  document.getElementById("r_inc").textContent="+$"+Math.round(inc).toLocaleString()+"/wk";
-  document.getElementById("r_new").textContent=newPct.toFixed(1)+"%";
-  document.getElementById("r_annual").textContent="-$"+Math.round(annual).toLocaleString();
+  var protein = parseFloat(document.getElementById("r_protein").value)||0;
+  var dairy   = parseFloat(document.getElementById("r_dairy").value)||0;
+  var produce = parseFloat(document.getElementById("r_produce").value)||0;
+  var dry     = parseFloat(document.getElementById("r_dry").value)||0;
+  var target  = 30;
+  var total   = protein+dairy+produce+dry;
+
+  // Per-segment pressure from GPPI category YoY changes
+  // Proteins=meats_yoy, Dairy=dairy_yoy, Produce=fruits_veg_yoy, Dry=cereals_yoy
+  var protein_pct = Math.min(Math.max((GPPI_PCT * 0.8), -5), 15);
+  var dairy_pct   = Math.min(Math.max((GPPI_PCT * 1.4), -5), 20);
+  var produce_pct = Math.min(Math.max((GPPI_PCT * 1.3), -5), 18);
+  var dry_pct     = Math.min(Math.max((GPPI_PCT * 0.9), -5), 15);
+
+  var protein_inc = protein * (protein_pct/100);
+  var dairy_inc   = dairy   * (dairy_pct/100);
+  var produce_inc = produce * (produce_pct/100);
+  var dry_inc     = dry     * (dry_pct/100);
+  var total_inc   = protein_inc+dairy_inc+produce_inc+dry_inc;
+  var annual      = total_inc*52;
+
+  // Top risk category
+  var risks = [
+    {name:"Proteins", inc:protein_inc},
+    {name:"Dairy",    inc:dairy_inc},
+    {name:"Produce",  inc:produce_inc},
+    {name:"Dry Goods",inc:dry_inc}
+  ];
+  risks.sort(function(a,b){return b.inc-a.inc;});
+
+  document.getElementById("r_total").textContent   = "$"+Math.round(total).toLocaleString();
+  document.getElementById("r_inc").textContent     = "+$"+Math.round(total_inc).toLocaleString()+"/wk";
+  document.getElementById("r_top_risk").textContent = risks[0].name;
+  document.getElementById("r_annual").textContent  = "-$"+Math.round(annual).toLocaleString();
+  document.getElementById("r_protein_impact").textContent = "-$"+Math.round(protein_inc*52).toLocaleString();
+  document.getElementById("r_dairy_impact").textContent   = "-$"+Math.round(dairy_inc*52).toLocaleString();
+  document.getElementById("r_produce_impact").textContent = "-$"+Math.round(produce_inc*52).toLocaleString();
+  document.getElementById("r_dry_impact").textContent     = "-$"+Math.round(dry_inc*52).toLocaleString();
+
   var ib=document.getElementById("r_impact_box");
   ib.style.background=annual>5000?"#FFEBEE":annual>2000?"#FFF8E1":"#E8F5E9";
   ib.style.borderLeft="4px solid "+(annual>5000?"#F44336":annual>2000?"#FF9800":"#4CAF50");
+
   var v="";
-  if(GPPI_PCT>5){v="<div class='verdict red'>⚠️ HIGH PRESSURE — Lock in contracts this week. Est. impact: +"+GPPI_PCT.toFixed(1)+"% = -$"+Math.round(annual).toLocaleString()+"/year.</div>";}
-  else if(GPPI_PCT>2){v="<div class='verdict yellow'>⚠️ MODERATE — Review contracts within 30 days. Est. impact: -$"+Math.round(annual).toLocaleString()+"/year.</div>";}
-  else{v="<div class='verdict green'>✅ STABLE — No immediate action. Est. impact: "+GPPI_PCT.toFixed(1)+"%.</div>";}
+  if(GPPI_PCT>5){
+    v="<div class='verdict red'>⚠️ HIGH PRESSURE — Lock in contracts this week. "+risks[0].name+" is your highest risk category at +$"+Math.round(risks[0].inc).toLocaleString()+"/week. Est. annual impact: -$"+Math.round(annual).toLocaleString()+".</div>";
+  } else if(GPPI_PCT>2){
+    v="<div class='verdict yellow'>⚠️ MODERATE — Review contracts within 30 days. "+risks[0].name+" showing highest pressure. Est. annual impact: -$"+Math.round(annual).toLocaleString()+".</div>";
+  } else {
+    v="<div class='verdict green'>✅ STABLE — No immediate action. "+risks[0].name+" is your most exposed category at current pressure levels.</div>";
+  }
   document.getElementById("r_verdict").innerHTML=v;
 }
 
