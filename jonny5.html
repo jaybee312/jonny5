@@ -233,6 +233,28 @@ tr:hover td{background:#f8f9fa;}
   <div id="r_verdict"></div>
   </div>
 </div>
+<div id="tab-ecomm" class="content">
+  <div class="tool-intro">
+    <h3>What do you need to order and when?</h3>
+    <p>Stockouts do not happen because demand spikes unexpectedly. They happen because nobody did the math far enough in advance.</p>
+  </div>
+  <div class="calc-box">
+    <h4>Inventory Risk Calculator</h4>
+    <div class="input-row">
+      <div class="input-col"><label>Current Inventory (units)</label><input type="number" id="e_inv" value="500" min="0" oninput="calcEcomm()"></div>
+      <div class="input-col"><label>Average Weekly Sales (units)</label><input type="number" id="e_sales" value="50" min="1" oninput="calcEcomm()"></div>
+      <div class="input-col"><label>Supplier Lead Time (weeks)</label><input type="number" id="e_lead" value="4" min="1" max="26" oninput="calcEcomm()"></div>
+      <div class="input-col"><label>Revenue Per Unit ($)</label><input type="number" id="e_rev" value="35" min="1" oninput="calcEcomm()"></div>
+    </div>
+    <div class="out-row">
+      <div class="out-item"><span class="stat-l">Weeks of Supply</span><span class="stat-v" id="e_weeks">—</span></div>
+      <div class="out-item"><span class="stat-l">Reorder Point</span><span class="stat-v" id="e_rp">—</span></div>
+      <div class="out-item"><span class="stat-l">Recommended Order</span><span class="stat-v" id="e_qty">—</span></div>
+      <div class="out-item hl" id="e_risk_box"><span class="stat-l">Revenue at Risk</span><span class="stat-v" id="e_risk">—</span></div>
+    </div>
+    <div id="e_verdict"></div>
+  </div>
+</div>
 <div id="tab-outlook" class="content active">
   <div class="tool-intro">
     <h3>The signals your costs follow — before you feel them</h3>
