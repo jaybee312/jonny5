@@ -1,0 +1,6 @@
+project:
+  type: website
+  output-dir: .
+
+website:
+  title: "Problem Solving with Jonny 5"

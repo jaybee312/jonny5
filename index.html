@@ -30,7 +30,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .header{background:#1a1a2e;color:white;padding:24px 40px;display:flex;align-items:center;gap:16px;}
 .header h1{font-size:1.8rem;font-weight:800;}
 .header p{font-size:0.95rem;opacity:0.7;margin-top:4px;}
-.robot{font-size:2.5rem;}
+.robot{height:54px;width:54px;object-fit:cover;border-radius:10px;display:block;flex:0 0 auto;}
 .tabs{display:flex;background:white;border-bottom:2px solid #e0e0e0;padding:0 40px;overflow-x:auto;}
 .tab{padding:14px 20px;cursor:pointer;font-weight:600;font-size:0.9rem;border-bottom:3px solid transparent;color:#666;transition:all 0.2s;white-space:nowrap;}
 .tab:hover{color:#1a1a2e;}
@@ -82,6 +82,14 @@ td{padding:10px 12px;border-bottom:1px solid #f0f0f0;}
 tr:hover td{background:#f8f9fa;}
 .footer{text-align:center;padding:30px 40px;color:#888;font-size:0.85rem;border-top:1px solid #e0e0e0;margin-top:20px;}
 .footer a{color:#1a1a2e;font-weight:600;}
+
+/* ---- tab banners ---- */
+.tabbanner{display:block;width:100%;height:auto;border-radius:8px;margin:0 0 18px;}
+.bannerwrap{position:relative;margin:0 0 18px;}
+.bannerwrap .tabbanner{margin:0;}
+.bannerhead{position:absolute;top:0;right:0;width:66%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 3%;box-sizing:border-box;pointer-events:none;}
+.bannerhead h2{margin:0;color:#1a1a2e;font-weight:800;line-height:1.12;font-size:clamp(15px,2.5vw,34px);}
+.bannerhead p{margin:7px 0 0;color:#3a3a4a;font-weight:600;line-height:1.2;font-size:clamp(11px,1.35vw,16px);}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LQ33R4EJMN"></script>
 <script>
@@ -93,10 +101,10 @@ tr:hover td{background:#f8f9fa;}
 </head>
 <body>
 <div class="header">
-  <span class="robot">🤖</span>
+  <img class="robot" src="images/jonny5_logo.png" alt="Jonny 5">
   <div>
-    <h1>Ask Jonny5 - Predictive Business Intelligence</h1>
-    <p>Real-time Food, Fuel, and Inventory Forecating</p>
+    <h1>Ask Jonny 5 — Predictive Business Intelligence</h1>
+    
   </div>
 </div>
 <div class="tabs">
@@ -105,10 +113,11 @@ tr:hover td{background:#f8f9fa;}
   <div class="tab" onclick="showTab(this,'fleet')">🚚 Fleet</div>
   <div class="tab" onclick="showTab(this,'restaurant')">🍽️ Restaurant</div>
   <div class="tab" onclick="showTab(this,'ecomm')">📦 E-Commerce</div>
-  <div class="tab" onclick="showTab(this,'about')">ℹ️ About</div>
+  <div class="tab" onclick="showTab(this,'about')">🤖 Jonny 5</div>
 </div>
 
 <div id="tab-trucker" class="content">
+<img class="tabbanner" src="images/pete_trucker_banner.png" alt="Pete the owner-operator">
   <div class="tool-intro">
     <h3>Is your fuel surcharge set right?</h3>
     <p>Your fuel surcharge was set based on what diesel cost when you negotiated it. If diesel has moved since then — and it has — the math may no longer work in your favor. Select your region, enter your details, and Jonny 5 shows exactly how much you are covering or absorbing per week.</p>
@@ -160,6 +169,7 @@ tr:hover td{background:#f8f9fa;}
 </div>
 
 <div id="tab-fleet" class="content">
+<img class="tabbanner" src="images/lisa_fleet_banner.png" alt="Lisa the fleet manager">
   <div class="tool-intro">
     <h3>What will fuel cost on jobs you are bidding today?</h3>
     <p>Select your region. Enter your job details. See your actual fuel cost under three scenarios before you commit.</p>
@@ -197,6 +207,7 @@ tr:hover td{background:#f8f9fa;}
 </div>
 
 <div id="tab-restaurant" class="content">
+<img class="tabbanner" src="images/maria_restaurant_banner.png" alt="Maria the restaurant owner">
   <div class="tool-intro">
     <h3>What should you lock in with suppliers this week?</h3>
     <p>Food cost inflation does not announce itself. It builds upstream — in energy prices, freight costs, and manufacturing inputs — weeks before it hits your supplier invoices.</p>
@@ -241,6 +252,7 @@ tr:hover td{background:#f8f9fa;}
   </div>
 </div>
 <div id="tab-ecomm" class="content">
+<img class="tabbanner" src="images/sam_ecomm_banner.png" alt="Sam the inventory manager">
   <div class="tool-intro">
     <h3>What do you need to order and when?</h3>
     <p>Stockouts do not happen because demand spikes unexpectedly. They happen because nobody did the math far enough in advance.</p>
@@ -263,6 +275,7 @@ tr:hover td{background:#f8f9fa;}
   </div>
 </div>
 <div id="tab-outlook" class="content active">
+<div class="bannerwrap"><img class="tabbanner" src="images/market_banner.png" alt="Market update with Jonny 5"><div class="bannerhead" style="left:52%;right:4%;width:auto;"><h2>Weekly Food &amp;<br>Fuel Report</h2></div></div>
   <div class="tool-intro">
     <h3>The signals your costs follow — before you feel them</h3>
     <p>Crude oil moves first. Diesel follows within 1-2 weeks. Freight costs adjust within 2-4 weeks. Your supplier invoices reflect it 4-8 weeks later. These are the live readings — updated weekly.</p>
@@ -348,6 +361,7 @@ tr:hover td{background:#f8f9fa;}
 </div>
 
 <div id="tab-about" class="content">
+<div class="bannerwrap"><img class="tabbanner" src="images/jonny5_banner.png" alt="Meet Jonny 5"><div class="bannerhead"><h2>Decision Intelligence</h2></div></div>
 <div class="tool-intro">
   <h3>The Cost of Flying Blind</h3>
 
@@ -482,13 +496,42 @@ function getRegionalForecast(r){
   return{base:BASE+adj,cons:CONS+adj,dis:DIS+adj};
 }
 
-function showTab(el,name){
+/* analytics helper — safe even if gtag is blocked by an ad blocker */
+function track(name,params){
+  try{ if(typeof gtag==="function") gtag("event",name,params||{}); }catch(e){}
+}
+
+var VALID_TABS=["outlook","trucker","fleet","restaurant","ecomm","about"];
+
+function activateTab(name,via){
+  if(VALID_TABS.indexOf(name)===-1)return;
   document.querySelectorAll(".content").forEach(function(c){c.classList.remove("active");});
   document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active");});
-  document.getElementById("tab-"+name).classList.add("active");
-  el.classList.add("active");
+  var panel=document.getElementById("tab-"+name);
+  if(panel)panel.classList.add("active");
+  document.querySelectorAll(".tab").forEach(function(t){
+    if((t.getAttribute("onclick")||"").indexOf("'"+name+"'")!==-1)t.classList.add("active");
+  });
   if(name==="outlook")setTimeout(initCharts,50);
+  track("tab_view",{tab_name:name,via:via||"click"});
 }
+
+/* keeps your existing onclick="showTab(this,'trucker')" handlers working */
+function showTab(el,name){activateTab(name,"click");}
+
+/* opens the tab named in the URL hash, e.g. askjonny5.com/#trucker */
+function routeFromHash(via){
+  var name=(location.hash||"").replace("#","").toLowerCase();
+  if(VALID_TABS.indexOf(name)!==-1){
+    activateTab(name,via);
+    track("deeplink_landing",{tab_name:name});
+  }else{
+    var outlook=document.getElementById("tab-outlook");
+    if(outlook&&outlook.classList.contains("active"))initCharts();
+  }
+}
+window.addEventListener("DOMContentLoaded",function(){routeFromHash("deeplink");});
+window.addEventListener("hashchange",function(){routeFromHash("hashchange");});
 
 function initCharts(){
   if(fuelChartObj)return;
@@ -680,6 +723,28 @@ function calcEcomm(){
 }
 
 calcTrucker();calcFleet();calcRest();calcEcomm();
+
+/* calculator engagement — debounced so one event fires per use, not per keystroke */
+function debounce(fn,ms){var t;return function(){var a=arguments,c=this;clearTimeout(t);t=setTimeout(function(){fn.apply(c,a);},ms);};}
+function verdictState(sel){
+  var el=document.querySelector(sel+" .verdict");
+  if(!el)return "none";
+  return el.classList.contains("green")?"good":el.classList.contains("yellow")?"watch":el.classList.contains("red")?"risk":"none";
+}
+[["tab-trucker","trucker","#t_verdict","t_region"],
+ ["tab-fleet","fleet","#f_verdict","f_region"],
+ ["tab-restaurant","restaurant","#r_verdict",null],
+ ["tab-ecomm","ecomm","#e_verdict",null]].forEach(function(m){
+  var container=document.getElementById(m[0]);
+  if(!container)return;
+  var fire=debounce(function(){
+    var p={calculator:m[1],result:verdictState(m[2])};
+    if(m[3]&&document.getElementById(m[3]))p.region=document.getElementById(m[3]).value;
+    track("calculator_run",p);
+  },1200);
+  container.addEventListener("input",fire);
+  container.addEventListener("change",fire);
+});
 </script>
 </body>
 </html>
