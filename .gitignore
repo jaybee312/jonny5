@@ -2,3 +2,5 @@
 data/
 chartjs.min.js
 jonny5_template.html
+.DS_Store
+.quarto/
