@@ -196,6 +196,7 @@ tr:hover td{background:#f8f9fa;}
       <div class="input-col"><label>Number of Trucks</label><input type="number" id="f_trucks" value="3" min="1" oninput="calcFleet()"></div>
       <div class="input-col"><label>Average MPG</label><input type="number" id="f_mpg" value="7.5" min="4" max="15" step="0.5" oninput="calcFleet()"></div>
       <div class="input-col"><label>Your Bid Rate ($/mile)</label><input type="number" id="f_bid" value="2.50" min="0.5" max="10" step="0.05" oninput="calcFleet()"></div>
+      <div class="input-col"><label>Operating Cost ex-Fuel ($/mile)</label><input type="number" id="f_opex" value="1.70" min="0" max="5" step="0.05" oninput="calcFleet()"></div>
     </div>
     <div class="scenario-row">
       <div class="sc g"><div class="sc-label">Conservative</div><div class="sc-price" id="f_cons_price">$5.010/gal</div><div class="sc-cost" id="f_cons_cost">—</div><div class="sc-margin" id="f_cons_margin">—</div></div>
@@ -285,11 +286,11 @@ tr:hover td{background:#f8f9fa;}
     <p>This week: West Coast diesel ($6.289/gal) vs Gulf Coast ($4.786/gal) = <strong>$1.50/gal spread</strong>. A 10-truck fleet running 2,500 miles/week pays <strong>$5,000 more per week</strong> on the West Coast. That is $260,000/year.</p>
   </div>
   <div class="calc-box" style="background:#1a1a2e;color:white;border:none;">
-    <h4 style="color:white;margin-bottom:16px;">What to watch this week — June 08 2026</h4>
+    <h4 style="color:white;margin-bottom:16px;">What to watch this week — June 15 2026</h4>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #F44336;">
         <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Crude Oil</span>
-        <p style="color:white;margin-top:4px;">WTI crude at $95.00/bbl — +29% year over year. Supply disruption scenario is not theoretical at current levels.</p>
+        <p style="color:white;margin-top:4px;">WTI crude at $81.38/bbl — +12% year over year. Prices elevated vs last year — monitor for further movement.</p>
       </div>
       <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #FF9800;">
         <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Food Cost Pressure</span>
@@ -339,7 +340,7 @@ tr:hover td{background:#f8f9fa;}
     <div style="display:flex;flex-direction:column;">
       <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#FFF3E0;border-radius:8px 8px 0 0;border-bottom:2px solid #f5f5f5;">
         <span style="font-size:1.5rem;">🛢️</span>
-        <div><strong>WTI Crude Oil</strong> — $95.00/bbl (+29% YoY)<br><span style="color:#666;font-size:0.85rem;">The root signal. Everything downstream follows crude.</span></div>
+        <div><strong>WTI Crude Oil</strong> — $81.38/bbl (+12% YoY, as of Jun 15)<br><span style="color:#666;font-size:0.85rem;">The root signal. Everything downstream follows crude.</span></div>
       </div>
       <div style="padding:8px 16px;background:#fff;border-bottom:2px solid #f5f5f5;color:#999;font-size:0.82rem;font-style:italic;">↓ 1-2 weeks</div>
       <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#F3E5F5;border-bottom:2px solid #f5f5f5;">
@@ -624,22 +625,24 @@ function calcFleet(){
   var trucks=parseFloat(document.getElementById("f_trucks").value)||3;
   var mpg=parseFloat(document.getElementById("f_mpg").value)||7.5;
   var bid=parseFloat(document.getElementById("f_bid").value)||2.50;
-  var total=miles*trucks;var gal=total/mpg;var rev=total*bid;
+  var opex=parseFloat(document.getElementById("f_opex").value);if(isNaN(opex))opex=1.70;
+  var total=miles*trucks;var gal=total/mpg;var rev=total*bid;var other=opex*total;
   var cC=gal*fc.cons;var bC=gal*fc.base;var dC=gal*fc.dis;
-  var cM=rev-cC;var bM=rev-bC;var dM=rev-dC;var be=bC/total;
+  var cM=rev-cC-other;var bM=rev-bC-other;var dM=rev-dC-other;
+  var beMile=(bC+other)/total;var beFuel=(rev-other)/gal;
   document.getElementById("f_cons_price").textContent="$"+fc.cons.toFixed(3)+"/gal";
   document.getElementById("f_base_price").textContent="$"+fc.base.toFixed(3)+"/gal";
   document.getElementById("f_dis_price").textContent="$"+fc.dis.toFixed(3)+"/gal";
   document.getElementById("f_cons_cost").textContent="$"+Math.round(cC).toLocaleString();
   document.getElementById("f_base_cost").textContent="$"+Math.round(bC).toLocaleString();
   document.getElementById("f_dis_cost").textContent="$"+Math.round(dC).toLocaleString();
-  document.getElementById("f_cons_margin").textContent="Margin: $"+Math.round(cM).toLocaleString();
-  document.getElementById("f_base_margin").textContent="Margin: $"+Math.round(bM).toLocaleString();
-  document.getElementById("f_dis_margin").textContent="Margin: $"+Math.round(dM).toLocaleString();
+  document.getElementById("f_cons_margin").textContent="Margin: $"+Math.round(cM).toLocaleString()+" ("+(cM/rev*100).toFixed(0)+"%)";
+  document.getElementById("f_base_margin").textContent="Margin: $"+Math.round(bM).toLocaleString()+" ("+(bM/rev*100).toFixed(0)+"%)";
+  document.getElementById("f_dis_margin").textContent="Margin: $"+Math.round(dM).toLocaleString()+" ("+(dM/rev*100).toFixed(0)+"%)";
   var v="";
-  if(dM<0){v="<div class='verdict red'>⚠️ BID AT RISK in "+region+" — Loses $"+Math.abs(Math.round(dM)).toLocaleString()+" under disruption. Break-even: $"+be.toFixed(3)+"/mile.</div>";}
-  else if(bM/rev<0.10){v="<div class='verdict yellow'>⚠️ THIN MARGIN in "+region+" — "+(bM/rev*100).toFixed(1)+"% at base. Consider $"+(be*1.15).toFixed(3)+"/mile for 15% buffer.</div>";}
-  else{v="<div class='verdict green'>✅ SOLID BID in "+region+" — "+(bM/rev*100).toFixed(1)+"% margin at base. Break-even fuel: $"+(rev/gal).toFixed(3)+"/gal.</div>";}
+  if(dM<0){v="<div class='verdict red'>⚠️ BID AT RISK in "+region+" — loses $"+Math.abs(Math.round(dM)).toLocaleString()+" under disruption. Need $"+beMile.toFixed(2)+"/mile to break even at base (all-in).</div>";}
+  else if(bM/rev<0.10){v="<div class='verdict yellow'>⚠️ THIN MARGIN in "+region+" — "+(bM/rev*100).toFixed(1)+"% at base after all costs. Consider $"+(beMile/0.85).toFixed(2)+"/mile for a 15% margin.</div>";}
+  else{v="<div class='verdict green'>✅ SOLID BID in "+region+" — "+(bM/rev*100).toFixed(1)+"% margin at base (all-in). Fuel break-even: $"+beFuel.toFixed(2)+"/gal before this bid goes underwater.</div>";}
   document.getElementById("f_verdict").innerHTML=v;
 }
 
@@ -693,7 +696,7 @@ function calcRest(){
   if(GPPI_PCT>5){
     v="<div class='verdict red'>⚠️ HIGH PRESSURE — Lock in contracts this week. "+risks[0].name+" is your highest risk category at +$"+Math.round(risks[0].inc).toLocaleString()+"/week. Est. annual impact: -$"+Math.round(annual).toLocaleString()+".</div>";
   } else if(GPPI_PCT>2){
-    v="<div class='verdict yellow'>⚠️ MODERATE — Review contracts within 30 days. "+risks[0].name+" showing highest pressure. Est. annual impact: -$"+Math.round(annual).toLocaleString()+".</div>";
+    v="<div class='verdict yellow'>⚠️ MODERATE — Review contracts within 30 days. "+risks[0].name+" is your biggest exposure at +$"+Math.round(risks[0].inc).toLocaleString()+"/wk (largest spend × pressure). Est. annual impact: -$"+Math.round(annual).toLocaleString()+".</div>";
   } else {
     v="<div class='verdict green'>✅ STABLE — No immediate action. "+risks[0].name+" is your most exposed category at current pressure levels.</div>";
   }

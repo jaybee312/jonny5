@@ -16,8 +16,42 @@ TEMPLATE <- "jonny5_template.html"
 OUTPUT   <- "index.html"
 if (!file.exists(TEMPLATE)) stop("Missing ", TEMPLATE, " in ", getwd())
 
+# 1b. Current WTI — Yahoo front-month (CL=F) via quantmod is near-real-time and
+#     tracks the live market. FRED daily is the YoY baseline + fallback; the
+#     weekly cache is the last resort.
+fred_wti <- tryCatch(fredr("DCOILWTICO", observation_start = Sys.Date() - 430),
+                     error = function(e) NULL)
+fw <- if (!is.null(fred_wti)) { x <- fred_wti[!is.na(fred_wti$value), ]; x[order(x$date), ] } else NULL
+
+curr_wti <- as.numeric(latest_fuel$wti_crude); wti_date <- latest_fuel$date   # cache fallback
+if (!is.null(fw) && nrow(fw) > 0) {                                            # FRED daily
+  curr_wti <- as.numeric(fw$value[nrow(fw)]); wti_date <- as.Date(fw$date[nrow(fw)])
+}
+yq <- tryCatch({                                                              # Yahoo live (best)
+  if (!requireNamespace("quantmod", quietly = TRUE)) stop("no quantmod")
+  quantmod::getQuote("CL=F")
+}, error = function(e) NULL)
+if (!is.null(yq) && !is.na(suppressWarnings(as.numeric(yq$Last))) && as.numeric(yq$Last) > 0) {
+  curr_wti <- as.numeric(yq$Last)
+  wti_date <- tryCatch(as.Date(yq[["Trade Time"]]), error = function(e) Sys.Date())
+  if (length(wti_date) == 0 || is.na(wti_date)) wti_date <- Sys.Date()
+}
+# year-over-year vs ~1 year ago (from FRED history)
+if (!is.null(fw) && nrow(fw) > 0) {
+  ya <- fw[fw$date <= wti_date - 364, ]
+  if (nrow(ya) > 0) wti_yoy <- (curr_wti - ya$value[nrow(ya)]) / ya$value[nrow(ya)] * 100
+}
+# rebuild the WTI "watch" sentence with the fresh value
+watch1 <- sprintf("WTI crude at $%.2f/bbl — %s year over year. %s", curr_wti,
+  ifelse(!is.na(wti_yoy), sprintf("%+.0f%%", wti_yoy), "data pending"),
+  ifelse(!is.na(wti_yoy) && wti_yoy > 20, "Supply disruption scenario is not theoretical at current levels.",
+  ifelse(!is.na(wti_yoy) && wti_yoy > 0, "Prices elevated vs last year — monitor for further movement.",
+         "Prices below last year — favorable conditions.")))
+
 # 2. Derived values the template needs on top of rebuild's variables ----------
-report_date <- format(latest_fuel$date, "%B %d %Y")           # "June 06 2026"
+report_date <- format(Sys.Date(),      "%B %d %Y")   # publish date (the day you run it)
+fuel_week   <- format(latest_fuel$date, "%B %d %Y")  # diesel / EIA data week
+wti_asof    <- format(wti_date,         "%b %d")     # WTI as-of date, e.g. "Jun 12"
 
 ps         <- padd_summary[order(padd_summary$value), ]       # cheapest -> dearest
 region_min <- ps$region[1];          min_price <- ps$value[1]
@@ -37,6 +71,8 @@ fmt_int <- function(x) format(round(x), big.mark = ",", trim = TRUE)
 # 3. Token -> value map (all strings) -----------------------------------------
 vals <- c(
   REPORT_DATE = report_date,
+  FUEL_WEEK   = fuel_week,
+  WTI_DATE    = wti_asof,
   CURR_WTI    = sprintf("%.2f",  curr_wti),
   WTI_YOY     = yoy_txt,
   CURR_D      = sprintf("%.3f",  curr_d),
@@ -90,9 +126,9 @@ if (length(left) > 0)
 writeLines(html, OUTPUT, useBytes = TRUE)
 
 cat(sprintf("\n[OK] Wrote %s  (%d bytes)\n", OUTPUT, file.info(OUTPUT)$size))
-cat(sprintf("     date=%s  WTI=$%s (%s)  diesel=$%s  gppi=%s (%s)\n",
-            report_date, vals[["CURR_WTI"]], yoy_txt, vals[["CURR_D"]],
-            vals[["GPPI_S"]], gppi_label))
+cat(sprintf("     published %s | WTI $%s (%s, as of %s) | diesel $%s (week of %s) | gppi %s (%s, %s)\n",
+            report_date, vals[["CURR_WTI"]], yoy_txt, wti_asof, vals[["CURR_D"]], fuel_week,
+            vals[["GPPI_S"]], gppi_label, gppi_month))
 cat(sprintf("     spread=$%s  fleet=$%s/wk  cheapest=%s ($%s)  dearest=%s ($%s)\n",
             vals[["SPREAD"]], vals[["WEEKLY_DIFF"]], region_min, vals[["MIN_PRICE"]],
             region_max, vals[["MAX_PRICE"]]))
