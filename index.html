@@ -106,7 +106,15 @@ tr:hover td{background:#f8f9fa;}
      so they stack cleanly instead of leaving an awkward half-column */
   .input-row { grid-template-columns: 1fr; }
   .out-row, .stat-row { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
-}</style>
+
+  /* iOS Safari auto-zooms into any field under 16px on focus — 16px stops it.
+     the extra padding also brings tap targets up to ~44px. */
+  .input-col input, .input-col select { font-size: 16px; padding: 12px; }
+}
+/* charts live in a fixed-height box so they stay readable instead of
+   collapsing to a thin band on narrow screens (pairs with maintainAspectRatio:false) */
+.chart-wrap { position: relative; width: 100%; height: 340px; }
+</style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LQ33R4EJMN"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -302,11 +310,11 @@ tr:hover td{background:#f8f9fa;}
     <p>This week: West Coast diesel ($6.074/gal) vs Gulf Coast ($4.646/gal) = <strong>$1.43/gal spread</strong>. A 10-truck fleet running 2,500 miles/week pays <strong>$4,767 more per week</strong> on the West Coast. That is $247,884/year.</p>
   </div>
   <div class="calc-box" style="background:#1a1a2e;color:white;border:none;">
-    <h4 style="color:white;margin-bottom:16px;">What to watch this week — June 18 2026</h4>
+    <h4 style="color:white;margin-bottom:16px;">What to watch this week — June 19 2026</h4>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #F44336;">
         <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Crude Oil</span>
-        <p style="color:white;margin-top:4px;">WTI crude at $74.11/bbl — -2% year over year. Prices below last year — favorable conditions.</p>
+        <p style="color:white;margin-top:4px;">WTI crude at $76.68/bbl — +1% year over year. Prices elevated vs last year — monitor for further movement.</p>
       </div>
       <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #FF9800;">
         <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Food Cost Pressure</span>
@@ -334,12 +342,12 @@ tr:hover td{background:#f8f9fa;}
   <div class="calc-box">
     <h4>Diesel Price — 52 Week History + 13 Week Forecast</h4>
     <p class="calc-desc">Solid = actual | Dashed = base forecast | Shaded = scenario range</p>
-    <canvas id="fuelChart" height="100"></canvas>
+    <div class="chart-wrap"><canvas id="fuelChart"></canvas></div>
   </div>
   <div class="calc-box">
     <h4>Grocery Price Pressure Index — 12 Month History</h4>
     <p class="calc-desc">Rising GPPI leads food cost inflation by 4-8 weeks. Monthly series — latest reading June.</p>
-    <canvas id="gppiChart" height="80"></canvas>
+    <div class="chart-wrap"><canvas id="gppiChart"></canvas></div>
   </div>
   <div class="calc-box">
     <h4>Fuel Price Forward Range — 13 Weeks</h4>
@@ -356,7 +364,7 @@ tr:hover td{background:#f8f9fa;}
     <div style="display:flex;flex-direction:column;">
       <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#FFF3E0;border-radius:8px 8px 0 0;border-bottom:2px solid #f5f5f5;">
         <span style="font-size:1.5rem;">🛢️</span>
-        <div><strong>WTI Crude Oil</strong> — $74.11/bbl (-2% YoY, as of Jun 18)<br><span style="color:#666;font-size:0.85rem;">The root signal. Everything downstream follows crude.</span></div>
+        <div><strong>WTI Crude Oil</strong> — $76.68/bbl (+1% YoY, as of Jun 19)<br><span style="color:#666;font-size:0.85rem;">The root signal. Everything downstream follows crude.</span></div>
       </div>
       <div style="padding:8px 16px;background:#fff;border-bottom:2px solid #f5f5f5;color:#999;font-size:0.82rem;font-style:italic;">↓ 1-2 weeks</div>
       <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#F3E5F5;border-bottom:2px solid #f5f5f5;">
@@ -569,7 +577,7 @@ function initCharts(){
       {label:"Disruption",data:fcPad.concat(fcDis),borderColor:"#F44336",borderWidth:1.5,borderDash:[3,3],pointRadius:0,tension:0.3,backgroundColor:"rgba(244,67,54,0.1)",fill:"-1"},
       {label:"Conservative",data:fcPad.concat(fcCons),borderColor:"#4CAF50",borderWidth:1.5,borderDash:[3,3],pointRadius:0,tension:0.3,backgroundColor:"rgba(76,175,80,0.1)",fill:1}
     ]},
-    options:{responsive:true,interaction:{mode:"index",intersect:false},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
       plugins:{legend:{position:"bottom",labels:{boxWidth:12,font:{size:11}}},
         tooltip:{callbacks:{label:function(ctx){return ctx.dataset.label+": $"+(ctx.raw?ctx.raw.toFixed(3):"—")+"/gal";}}}},
       scales:{
@@ -589,7 +597,7 @@ function initCharts(){
       pointBackgroundColor:gppiData.map(function(v){return v===null?"#ccc":v>1.5?"#F44336":v>0.5?"#FF9800":v>-0.5?"#9E9E9E":"#4CAF50";}),
       tension:0.4,fill:false
     }]},
-    options:{responsive:true,
+    options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},
         tooltip:{callbacks:{label:function(ctx){var v=ctx.raw;if(v===null)return"No data";var s=v>1.5?"High Pressure":v>0.5?"Moderate":v>-0.5?"Neutral":"Relief Building";return"GPPI: "+v.toFixed(2)+" — "+s;}}}},
       scales:{
