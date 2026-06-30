@@ -148,15 +148,15 @@ tr:hover td{background:#f8f9fa;}
   </div>
   <div class="insight-box">
     <span class="insight-icon">💡</span>
-    <p>This week: West Coast diesel is <strong>$1.39/gal more</strong> than Gulf Coast. A 10-truck fleet running 2,500 miles/week pays <strong>$4,633 more per week</strong> on the West Coast. Select your region below to see your actual numbers.</p>
+    <p>This week: West Coast diesel is <strong>$1.24/gal more</strong> than Gulf Coast. A 10-truck fleet running 2,500 miles/week pays <strong>$4,133 more per week</strong> on the West Coast. Select your region below to see your actual numbers.</p>
   </div>
   <div class="alert-box" style="background:#F5F5F5;border-left:5px solid #9E9E9E;" id="trucker-alert">
     <div class="alert-header">
       <span class="badge" style="background:#9E9E9E;" id="t-badge">NEUTRAL</span>
-      <strong>Diesel Forecast vs Current — Week of June 22 2026</strong>
+      <strong>Diesel Forecast vs Current — Week of June 29 2026</strong>
     </div>
     <div class="stat-row">
-      <div class="stat-item"><span class="stat-l">Current Diesel (National)</span><span class="stat-v">$4.832/gal</span></div>
+      <div class="stat-item"><span class="stat-l">Current Diesel (National)</span><span class="stat-v">$4.668/gal</span></div>
       <div class="stat-item"><span class="stat-l">Your Region</span><span class="stat-v" id="t-regional-price">Select below</span></div>
       <div class="stat-item"><span class="stat-l">13-Week Forecast</span><span class="stat-v">$4.736/gal</span></div>
       <div class="stat-item"><span class="stat-l">Disruption Scenario</span><span class="stat-v" style="color:#F44336;">$4.899/gal</span></div>
@@ -169,12 +169,12 @@ tr:hover td{background:#f8f9fa;}
       <div class="input-col">
         <label>Your Region</label>
         <select id="t_region" onchange="calcTrucker()">
-          <option value="national">National Average ($4.832)</option>
-          <option value="Gulf Coast">Gulf Coast ($4.415)</option>
+          <option value="national">National Average ($4.668)</option>
+          <option value="Gulf Coast">Gulf Coast ($4.283)</option>
           <option value="East Coast">East Coast ($5.237)</option>
           <option value="Midwest">Midwest ($5.392)</option>
           <option value="Rocky Mountain">Rocky Mountain ($5.331)</option>
-          <option value="West Coast">West Coast ($5.809)</option>
+          <option value="West Coast">West Coast ($5.528)</option>
         </select>
       </div>
       <div class="input-col"><label>Weekly Miles Per Truck</label><input type="number" id="t_miles" value="2500" min="100" oninput="calcTrucker()"></div>
@@ -208,12 +208,12 @@ tr:hover td{background:#f8f9fa;}
       <div class="input-col">
         <label>Your Region</label>
         <select id="f_region" onchange="calcFleet()">
-          <option value="national">National Average ($4.832)</option>
-          <option value="Gulf Coast">Gulf Coast ($4.415)</option>
+          <option value="national">National Average ($4.668)</option>
+          <option value="Gulf Coast">Gulf Coast ($4.283)</option>
           <option value="East Coast">East Coast ($5.237)</option>
           <option value="Midwest">Midwest ($5.392)</option>
           <option value="Rocky Mountain">Rocky Mountain ($5.331)</option>
-          <option value="West Coast">West Coast ($5.809)</option>
+          <option value="West Coast">West Coast ($5.528)</option>
         </select>
       </div>
       <div class="input-col"><label>Total Job Miles</label><input type="number" id="f_miles" value="5000" min="100" oninput="calcFleet()"></div>
@@ -307,14 +307,14 @@ tr:hover td{background:#f8f9fa;}
   </div>
   <div class="insight-box">
     <span class="insight-icon">💡</span>
-    <p>This week: West Coast diesel ($5.809/gal) vs Gulf Coast ($4.415/gal) = <strong>$1.39/gal spread</strong>. A 10-truck fleet running 2,500 miles/week pays <strong>$4,633 more per week</strong> on the West Coast. That is $240,916/year.</p>
+    <p>This week: West Coast diesel ($5.528/gal) vs Gulf Coast ($4.283/gal) = <strong>$1.24/gal spread</strong>. A 10-truck fleet running 2,500 miles/week pays <strong>$4,133 more per week</strong> on the West Coast. That is $214,916/year.</p>
   </div>
   <div class="calc-box" style="background:#1a1a2e;color:white;border:none;">
-    <h4 style="color:white;margin-bottom:16px;">What to watch this week — June 29 2026</h4>
+    <h4 style="color:white;margin-bottom:16px;">What to watch this week — June 30 2026</h4>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #F44336;">
         <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Crude Oil</span>
-        <p style="color:white;margin-top:4px;">WTI crude at $70.85/bbl — +7% year over year. Prices elevated vs last year — monitor for further movement.</p>
+        <p style="color:white;margin-top:4px;">WTI crude at $70.13/bbl — +5% year over year. Prices elevated vs last year — monitor for further movement.</p>
       </div>
       <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #FF9800;">
         <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Food Cost Pressure</span>
@@ -322,7 +322,7 @@ tr:hover td{background:#f8f9fa;}
       </div>
       <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #9E9E9E;">
         <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Diesel Forecast Range</span>
-        <p style="color:white;margin-top:4px;">Diesel forecast range: $4.638 (conservative) to $4.899 (supply disruption) over 13 weeks vs current $4.832. Base scenario shows modest relief — conditions may improve.</p>
+        <p style="color:white;margin-top:4px;">Diesel forecast range: $4.638 (conservative) to $4.899 (supply disruption) over 13 weeks vs current $4.668. Base scenario shows modest relief — conditions may improve.</p>
       </div>
     </div>
   </div>
@@ -331,11 +331,11 @@ tr:hover td{background:#f8f9fa;}
     <p class="calc-desc">EIA PADD district prices. Updated weekly. Select your region on the Trucker and Fleet tabs to use your actual price.</p>
     <table>
       <tr><th>Region</th><th>Current Price</th><th>vs Last Week</th><th>vs National Avg</th><th>10-Truck Fleet Impact</th></tr>
-<tr><td><strong>Gulf Coast</strong></td><td>$4.415/gal</td><td style="color:#4CAF50;">-0.231</td><td style="color:#4CAF50;">-0.417</td><td>Cheapest ✅</td></tr>
-<tr><td><strong>Midwest</strong></td><td>$4.751/gal</td><td style="color:#4CAF50;">-0.260</td><td style="color:#666;">-0.081</td><td>+$1,120/wk vs Gulf Coast</td></tr>
-<tr><td><strong>Rocky Mountain</strong></td><td>$4.795/gal</td><td style="color:#4CAF50;">-0.224</td><td style="color:#666;">-0.037</td><td>+$1,267/wk vs Gulf Coast</td></tr>
-<tr><td><strong>East Coast</strong></td><td>$4.886/gal</td><td style="color:#4CAF50;">-0.162</td><td style="color:#666;">+0.054</td><td>+$1,570/wk vs Gulf Coast</td></tr>
-<tr><td><strong>West Coast</strong></td><td>$5.809/gal</td><td style="color:#4CAF50;">-0.265</td><td style="color:#F44336;">+0.977</td><td>+$4,647/wk vs Gulf Coast</td></tr>
+<tr><td><strong>Gulf Coast</strong></td><td>$4.283/gal</td><td style="color:#4CAF50;">-0.132</td><td style="color:#4CAF50;">-0.385</td><td>Cheapest ✅</td></tr>
+<tr><td><strong>Midwest</strong></td><td>$4.583/gal</td><td style="color:#4CAF50;">-0.168</td><td style="color:#666;">-0.085</td><td>+$1,000/wk vs Gulf Coast</td></tr>
+<tr><td><strong>Rocky Mountain</strong></td><td>$4.602/gal</td><td style="color:#4CAF50;">-0.193</td><td style="color:#666;">-0.066</td><td>+$1,063/wk vs Gulf Coast</td></tr>
+<tr><td><strong>East Coast</strong></td><td>$4.758/gal</td><td style="color:#4CAF50;">-0.128</td><td style="color:#666;">+0.090</td><td>+$1,583/wk vs Gulf Coast</td></tr>
+<tr><td><strong>West Coast</strong></td><td>$5.528/gal</td><td style="color:#4CAF50;">-0.281</td><td style="color:#F44336;">+0.860</td><td>+$4,150/wk vs Gulf Coast</td></tr>
     </table>
     <p style="margin-top:12px;font-size:0.82rem;color:#888;">10-truck fleet impact based on 2,500 miles/week per truck at 7.5 MPG vs Gulf Coast (cheapest region).</p>
   </div>
@@ -353,9 +353,9 @@ tr:hover td{background:#f8f9fa;}
     <h4>Fuel Price Forward Range — 13 Weeks</h4>
     <p class="calc-desc">Three scenarios based on WTI crude trajectory. National average.</p>
     <div class="scenario-row">
-      <div class="sc g"><div class="sc-label">Conservative<br><small style="font-weight:400;color:#666;">WTI -15%</small></div><div class="sc-cost">$4.638/gal</div><div class="sc-margin">-0.194 vs current</div></div>
-      <div class="sc b"><div class="sc-label">Base Forecast<br><small style="font-weight:400;color:#666;">Current trajectory</small></div><div class="sc-cost">$4.736/gal</div><div class="sc-margin">-0.096 vs current</div></div>
-      <div class="sc r"><div class="sc-label">Supply Disruption<br><small style="font-weight:400;color:#666;">WTI +25%</small></div><div class="sc-cost">$4.899/gal</div><div class="sc-margin">+0.067 vs current</div></div>
+      <div class="sc g"><div class="sc-label">Conservative<br><small style="font-weight:400;color:#666;">WTI -15%</small></div><div class="sc-cost">$4.638/gal</div><div class="sc-margin">-0.030 vs current</div></div>
+      <div class="sc b"><div class="sc-label">Base Forecast<br><small style="font-weight:400;color:#666;">Current trajectory</small></div><div class="sc-cost">$4.736/gal</div><div class="sc-margin">+0.068 vs current</div></div>
+      <div class="sc r"><div class="sc-label">Supply Disruption<br><small style="font-weight:400;color:#666;">WTI +25%</small></div><div class="sc-cost">$4.899/gal</div><div class="sc-margin">+0.231 vs current</div></div>
     </div>
   </div>
   <div class="calc-box">
@@ -364,12 +364,12 @@ tr:hover td{background:#f8f9fa;}
     <div style="display:flex;flex-direction:column;">
       <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#FFF3E0;border-radius:8px 8px 0 0;border-bottom:2px solid #f5f5f5;">
         <span style="font-size:1.5rem;">🛢️</span>
-        <div><strong>WTI Crude Oil</strong> — $70.85/bbl (+7% YoY, as of Jun 29)<br><span style="color:#666;font-size:0.85rem;">The root signal. Everything downstream follows crude.</span></div>
+        <div><strong>WTI Crude Oil</strong> — $70.13/bbl (+5% YoY, as of Jun 30)<br><span style="color:#666;font-size:0.85rem;">The root signal. Everything downstream follows crude.</span></div>
       </div>
       <div style="padding:8px 16px;background:#fff;border-bottom:2px solid #f5f5f5;color:#999;font-size:0.82rem;font-style:italic;">↓ 1-2 weeks</div>
       <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#F3E5F5;border-bottom:2px solid #f5f5f5;">
         <span style="font-size:1.5rem;">⛽</span>
-        <div><strong>Diesel Retail Price</strong> — $4.832/gal national | $4.415 (Gulf Coast) to $5.809 (West Coast)<br><span style="color:#666;font-size:0.85rem;">Regional spreads reflect local refinery capacity, taxes, and transport costs.</span></div>
+        <div><strong>Diesel Retail Price</strong> — $4.668/gal national | $4.283 (Gulf Coast) to $5.528 (West Coast)<br><span style="color:#666;font-size:0.85rem;">Regional spreads reflect local refinery capacity, taxes, and transport costs.</span></div>
       </div>
       <div style="padding:8px 16px;background:#fff;border-bottom:2px solid #f5f5f5;color:#999;font-size:0.82rem;font-style:italic;">↓ 2-4 weeks</div>
       <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#E8EAF6;border-bottom:2px solid #f5f5f5;">
@@ -510,8 +510,8 @@ tr:hover td{background:#f8f9fa;}
 </div>
 
 <script>
-var BASE=4.736, DIS=4.899, CONS=4.638, CURR=4.832, GPPI_PCT=1.34;
-var PADD={"Gulf Coast":4.415,"Midwest":4.751,"Rocky Mountain":4.795,"East Coast":4.886,"West Coast":5.809};
+var BASE=4.736, DIS=4.899, CONS=4.638, CURR=4.668, GPPI_PCT=1.34;
+var PADD={"Gulf Coast":4.283,"Midwest":4.583,"Rocky Mountain":4.602,"East Coast":4.758,"West Coast":5.528};
 var fuelChartObj=null, gppiChartObj=null;
 
 function getRegionalPrice(r){return r==="national"?CURR:PADD[r]||CURR;}
@@ -560,8 +560,8 @@ window.addEventListener("hashchange",function(){routeFromHash("hashchange");});
 
 function initCharts(){
   if(fuelChartObj)return;
-  var histLabels=["2025-06-23","2025-06-30","2025-07-07","2025-07-14","2025-07-21","2025-07-28","2025-08-04","2025-08-11","2025-08-18","2025-08-25","2025-09-01","2025-09-08","2025-09-15","2025-09-22","2025-09-29","2025-10-06","2025-10-13","2025-10-20","2025-10-27","2025-11-03","2025-11-10","2025-11-17","2025-11-24","2025-12-01","2025-12-08","2025-12-15","2025-12-22","2025-12-29","2026-01-05","2026-01-12","2026-01-19","2026-01-26","2026-02-02","2026-02-09","2026-02-16","2026-02-23","2026-03-02","2026-03-09","2026-03-16","2026-03-23","2026-03-30","2026-04-06","2026-04-13","2026-04-20","2026-04-27","2026-05-04","2026-05-11","2026-05-18","2026-05-25","2026-06-01","2026-06-08","2026-06-15","2026-06-22"];
-  var histData=[3.775,3.727,3.739,3.758,3.812,3.805,3.8,3.754,3.713,3.708,3.734,3.766,3.739,3.749,3.754,3.711,3.665,3.62,3.718,3.753,3.837,3.868,3.831,3.758,3.665,3.607,3.544,3.5,3.477,3.459,3.53,3.624,3.681,3.688,3.711,3.809,3.897,4.859,5.071,5.375,5.401,5.643,5.608,5.403,5.351,5.64,5.639,5.596,5.523,5.35,5.21,5.059,4.832];
+  var histLabels=["2025-06-30","2025-07-07","2025-07-14","2025-07-21","2025-07-28","2025-08-04","2025-08-11","2025-08-18","2025-08-25","2025-09-01","2025-09-08","2025-09-15","2025-09-22","2025-09-29","2025-10-06","2025-10-13","2025-10-20","2025-10-27","2025-11-03","2025-11-10","2025-11-17","2025-11-24","2025-12-01","2025-12-08","2025-12-15","2025-12-22","2025-12-29","2026-01-05","2026-01-12","2026-01-19","2026-01-26","2026-02-02","2026-02-09","2026-02-16","2026-02-23","2026-03-02","2026-03-09","2026-03-16","2026-03-23","2026-03-30","2026-04-06","2026-04-13","2026-04-20","2026-04-27","2026-05-04","2026-05-11","2026-05-18","2026-05-25","2026-06-01","2026-06-08","2026-06-15","2026-06-22","2026-06-29"];
+  var histData=[3.727,3.739,3.758,3.812,3.805,3.8,3.754,3.713,3.708,3.734,3.766,3.739,3.749,3.754,3.711,3.665,3.62,3.718,3.753,3.837,3.868,3.831,3.758,3.665,3.607,3.544,3.5,3.477,3.459,3.53,3.624,3.681,3.688,3.711,3.809,3.897,4.859,5.071,5.375,5.401,5.643,5.608,5.403,5.351,5.64,5.639,5.596,5.523,5.35,5.21,5.059,4.832,4.668];
   var fcLabels=["2026-06-29","2026-07-06","2026-07-13","2026-07-20","2026-07-27","2026-08-03","2026-08-10","2026-08-17","2026-08-24","2026-08-31","2026-09-07","2026-09-14","2026-09-21"];
   var fcBase=[null,4.745,4.738,4.736,4.735,4.735,4.735,4.735,4.735,4.735,4.735,4.735,4.735];
   var fcCons=[null,4.745,4.632,4.63,4.629,4.628,4.628,4.628,4.628,4.628,4.628,4.628,4.628];
