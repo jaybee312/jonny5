@@ -22,6 +22,7 @@ if (requireNamespace("dotenv", quietly = TRUE)) dotenv::load_dot_env()
 # -----------------------------------------------------------------------------
 
 FRED_API_KEY <- Sys.getenv("FRED_API_KEY")
+EIA_KEY      <- Sys.getenv("EIA_KEY")
 SHEETS_ID    <- Sys.getenv("GOOGLE_SHEETS_ID")
 
 # -----------------------------------------------------------------------------

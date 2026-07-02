@@ -48,6 +48,71 @@ watch1 <- sprintf("WTI crude at $%.2f/bbl — %s year over year. %s", curr_wti,
   ifelse(!is.na(wti_yoy) && wti_yoy > 0, "Prices elevated vs last year — monitor for further movement.",
          "Prices below last year — favorable conditions.")))
 
+# 2a. Crack spread — real 3-2-1 from cache (RBOB + HO spot via EIA) -----------
+# Latest week may be NA if EIA hasn't posted yet; fill with live proxy as fallback
+crack_spread_val  <- as.numeric(latest_fuel$diesel_crack_spread)
+if (is.na(crack_spread_val)) crack_spread_val <- round(curr_d - (curr_wti / 42), 2)
+
+crack_spread_fmt  <- if (!is.na(crack_spread_val)) sprintf("$%.2f", crack_spread_val) else "data pending"
+
+crack_note        <- if (!is.na(crack_spread_val)) {
+  if (crack_spread_val > 35) {
+    "Wide margins — refiners are running hard. Diesel supply is healthy for now."
+  } else if (crack_spread_val > 15) {
+    "Margins in normal range — no major refining-side pressure on diesel."
+  } else {
+    "Compressed margins — refiners may pull back, watch for diesel tightening."
+  }
+} else ""
+
+# Sparkline data — last 10 weeks, fill latest NA with live computed value
+fuel_sorted       <- fuel_weekly[order(fuel_weekly$date), ]
+spark_df          <- tail(fuel_sorted[, c("date", "diesel_crack_spread", "diesel_retail")], 10)
+spark_df$diesel_crack_spread[is.na(spark_df$diesel_crack_spread)] <- crack_spread_val
+
+# Full crack spread history for chart — drop NAs
+crack_hist          <- fuel_sorted[!is.na(fuel_sorted$diesel_crack_spread), c("date", "diesel_crack_spread")]
+crack_hist_labels   <- paste0('["', paste(format(crack_hist$date, "%Y-%m-%d"), collapse='","'), '"]')
+crack_hist_values   <- paste0("[", paste(round(crack_hist$diesel_crack_spread, 2), collapse=","), "]")
+
+# Data-driven insight: compare current to 4-week ago and 52-week average
+crack_4w_ago   <- if (nrow(crack_hist) >= 5) crack_hist$diesel_crack_spread[nrow(crack_hist) - 4] else NA_real_
+crack_52w_avg  <- if (nrow(crack_hist) >= 52) mean(tail(crack_hist$diesel_crack_spread, 52), na.rm=TRUE) else mean(crack_hist$diesel_crack_spread, na.rm=TRUE)
+crack_mom_chg  <- if (!is.na(crack_4w_ago)) round(crack_spread_val - crack_4w_ago, 2) else NA_real_
+crack_vs_avg   <- round(crack_spread_val - crack_52w_avg, 2)
+
+crack_insight <- sprintf(
+  "Current: $%.2f/bbl%s. %s the 52-week average ($%.2f/bbl). %s",
+  crack_spread_val,
+  if (!is.na(crack_mom_chg)) sprintf(" (%+.2f past 4 weeks)", crack_mom_chg) else "",
+  if (crack_vs_avg > 0) sprintf("$%.2f above", abs(crack_vs_avg)) else sprintf("$%.2f below", abs(crack_vs_avg)),
+  crack_52w_avg,
+  crack_note
+)
+
+# Forecast y-axis zoom — bracket history min/max with small padding
+forecast_ymin <- round(min(fuel_sorted$diesel_retail, na.rm=TRUE) - 0.10, 2)
+forecast_ymax <- round(max(fuel_sorted$diesel_retail, na.rm=TRUE) + 0.10, 2)
+# gas_inv_vs_avg: gasoline days supply vs 5-year average (distillate stub pending)
+# crude_supply_signal: directional signal already computed in ingest
+dist_vs_avg   <- as.numeric(latest_fuel$gas_inv_vs_avg)
+crude_signal  <- as.character(latest_fuel$crude_supply_signal)
+
+crude_vs_avg_txt <- if (!is.na(dist_vs_avg)) {
+  if (dist_vs_avg < 0) sprintf("%.1f days below", abs(dist_vs_avg)) else sprintf("%.1f days above", dist_vs_avg)
+} else "data pending"
+
+supply_note <- if (!is.na(dist_vs_avg)) {
+  if (dist_vs_avg < -1) {
+    "Gasoline stocks below seasonal average — tighter supply conditions ahead."
+  } else if (dist_vs_avg > 1) {
+    "Gasoline stocks above seasonal average — adequate near-term buffer."
+  } else {
+    "Gasoline stocks near the seasonal average — neutral supply picture."
+  }
+} else ""
+
+
 # 2. Derived values the template needs on top of rebuild's variables ----------
 report_date <- format(Sys.Date(),      "%B %d %Y")   # publish date (the day you run it)
 fuel_week   <- format(latest_fuel$date, "%B %d %Y")  # diesel / EIA data week
@@ -106,8 +171,17 @@ vals <- c(
   FC_BASE     = fc_base,
   FC_CONS     = fc_cons,
   FC_DIS      = fc_dis,
-  GPPI_LABELS = gppi_labels,
-  GPPI_VALUES = gppi_values
+  GPPI_LABELS   = gppi_labels,
+  GPPI_VALUES   = gppi_values,
+  CRACK_SPREAD        = crack_spread_fmt,
+  CRACK_NOTE          = crack_note,
+  CRACK_INSIGHT       = crack_insight,
+  CRACK_HIST_LABELS   = crack_hist_labels,
+  CRACK_HIST_VALUES   = crack_hist_values,
+  FORECAST_YMIN       = as.character(forecast_ymin),
+  FORECAST_YMAX       = as.character(forecast_ymax),
+  CRUDE_VS_AVG  = crude_vs_avg_txt,
+  SUPPLY_NOTE   = supply_note
 )
 
 # 4. Fill the template --------------------------------------------------------

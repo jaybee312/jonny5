@@ -158,8 +158,8 @@ tr:hover td{background:#f8f9fa;}
     <div class="stat-row">
       <div class="stat-item"><span class="stat-l">Current Diesel (National)</span><span class="stat-v">$4.668/gal</span></div>
       <div class="stat-item"><span class="stat-l">Your Region</span><span class="stat-v" id="t-regional-price">Select below</span></div>
-      <div class="stat-item"><span class="stat-l">13-Week Forecast</span><span class="stat-v">$4.736/gal</span></div>
-      <div class="stat-item"><span class="stat-l">Disruption Scenario</span><span class="stat-v" style="color:#F44336;">$4.899/gal</span></div>
+      <div class="stat-item"><span class="stat-l">13-Week Forecast</span><span class="stat-v">$4.642/gal</span></div>
+      <div class="stat-item"><span class="stat-l">Disruption Scenario</span><span class="stat-v" style="color:#F44336;">$4.790/gal</span></div>
     </div>
   </div>
   <div class="calc-box">
@@ -223,9 +223,9 @@ tr:hover td{background:#f8f9fa;}
       <div class="input-col"><label>Operating Cost ex-Fuel ($/mile)</label><input type="number" id="f_opex" value="1.70" min="0" max="5" step="0.05" oninput="calcFleet()"></div>
     </div>
     <div class="scenario-row">
-      <div class="sc g"><div class="sc-label">Conservative</div><div class="sc-price" id="f_cons_price">$4.638/gal</div><div class="sc-cost" id="f_cons_cost">—</div><div class="sc-margin" id="f_cons_margin">—</div></div>
-      <div class="sc b"><div class="sc-label">Base Forecast</div><div class="sc-price" id="f_base_price">$4.736/gal</div><div class="sc-cost" id="f_base_cost">—</div><div class="sc-margin" id="f_base_margin">—</div></div>
-      <div class="sc r"><div class="sc-label">Supply Disruption</div><div class="sc-price" id="f_dis_price">$4.899/gal</div><div class="sc-cost" id="f_dis_cost">—</div><div class="sc-margin" id="f_dis_margin">—</div></div>
+      <div class="sc g"><div class="sc-label">Conservative</div><div class="sc-price" id="f_cons_price">$4.553/gal</div><div class="sc-cost" id="f_cons_cost">—</div><div class="sc-margin" id="f_cons_margin">—</div></div>
+      <div class="sc b"><div class="sc-label">Base Forecast</div><div class="sc-price" id="f_base_price">$4.642/gal</div><div class="sc-cost" id="f_base_cost">—</div><div class="sc-margin" id="f_base_margin">—</div></div>
+      <div class="sc r"><div class="sc-label">Supply Disruption</div><div class="sc-price" id="f_dis_price">$4.790/gal</div><div class="sc-cost" id="f_dis_cost">—</div><div class="sc-margin" id="f_dis_margin">—</div></div>
     </div>
     <div id="f_verdict"></div>
   </div>
@@ -239,7 +239,7 @@ tr:hover td{background:#f8f9fa;}
   </div>
   <div class="alert-box" style="background:#FFF8E1;border-left:5px solid #FF9800;">
     <div class="alert-header">
-      <span class="badge" style="background:#FF9800;">GPPI: 0.45</span>
+      <span class="badge" style="background:#FF9800;">GPPI: 0.65</span>
       <strong>MODERATE PRESSURE</strong>
     </div>
     <p style="color:#555;margin-top:4px;">Review supplier contracts within 30 days. Moderate upstream pressure building.</p>
@@ -279,8 +279,8 @@ tr:hover td{background:#f8f9fa;}
 <div id="tab-ecomm" class="content">
 <img class="tabbanner" src="images/sam_ecomm_banner.png" alt="Sam the inventory manager">
   <div class="tool-intro">
-    <h3>What do you need to order and when?</h3>
-    <p>Stockouts do not happen because demand spikes unexpectedly. They happen because nobody did the math far enough in advance.</p>
+    <h3>Your cash is sitting on a shelf.</h3>
+    <p>For most e-commerce operators the money isn't gone — it's tied up in inventory. Order too much and it's dead cash. Order too little and a stockout hands the sale to a competitor. The question is never "am I profitable" — it's "how much do I order, and when."</p>
   </div>
   <div class="calc-box">
     <h4>Inventory Risk Calculator</h4>
@@ -298,6 +298,11 @@ tr:hover td{background:#f8f9fa;}
     </div>
     <div id="e_verdict"></div>
   </div>
+  <div class="calc-box" style="background:#1a1a2e;color:white;border:none;">
+    <h4 style="color:white;margin-bottom:8px;">The number above assumes your sales stay flat. They won't.</h4>
+    <p style="color:rgba(255,255,255,0.85);margin-bottom:14px;">The reorder point is built on your <em>average weekly sales</em> — a backward-looking number. But e-commerce demand moves with the macro economy, and it moves before your sales reports show it. The single strongest predictor of consumer goods demand is <strong>Real Disposable Income</strong> — how much money households actually have to spend after inflation.</p>
+    <p style="color:rgba(255,255,255,0.85);margin-bottom:0;">When real income softens, demand cools weeks before it lands in your numbers — and the inventory you ordered against last month's pace becomes overstock. When it climbs, flat-sales math under-orders and you stock out into rising demand. Jonny 5 already tracks Real Disposable Income on the Market Outlook tab. The reorder point that anticipates the turn is the one worth building on your actual data.</p>
+  </div>
 </div>
 <div id="tab-outlook" class="content active">
 <div class="bannerwrap"><img class="tabbanner" src="images/market_banner.png" alt="Market update with Jonny 5"><div class="bannerhead" style="left:52%;right:4%;width:auto;"><h2>Weekly Food &amp;<br>Fuel Report</h2></div></div>
@@ -310,23 +315,44 @@ tr:hover td{background:#f8f9fa;}
     <p>This week: West Coast diesel ($5.528/gal) vs Gulf Coast ($4.283/gal) = <strong>$1.24/gal spread</strong>. A 10-truck fleet running 2,500 miles/week pays <strong>$4,133 more per week</strong> on the West Coast. That is $214,916/year.</p>
   </div>
   <div class="calc-box" style="background:#1a1a2e;color:white;border:none;">
-    <h4 style="color:white;margin-bottom:16px;">What to watch this week — June 30 2026</h4>
+    <h4 style="color:white;margin-bottom:16px;">What to watch this week — July 02 2026</h4>
     <div style="display:flex;flex-direction:column;gap:12px;">
       <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #F44336;">
         <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Crude Oil</span>
-        <p style="color:white;margin-top:4px;">WTI crude at $70.13/bbl — +5% year over year. Prices elevated vs last year — monitor for further movement.</p>
+        <p style="color:white;margin-top:4px;">WTI crude at $68.42/bbl — +0% year over year. Prices elevated vs last year — monitor for further movement.</p>
       </div>
       <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #FF9800;">
         <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Food Cost Pressure</span>
-        <p style="color:white;margin-top:4px;">GPPI at 0.45 — neutral pressure. Dairy showing highest upstream cost signal at 6.0% YoY.</p>
+        <p style="color:white;margin-top:4px;">GPPI at 0.65 — moderate pressure. Dairy showing highest upstream cost signal at 6.0% YoY.</p>
       </div>
       <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #9E9E9E;">
         <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Diesel Forecast Range</span>
-        <p style="color:white;margin-top:4px;">Diesel forecast range: $4.638 (conservative) to $4.899 (supply disruption) over 13 weeks vs current $4.668. Base scenario shows modest relief — conditions may improve.</p>
+        <p style="color:white;margin-top:4px;">Diesel forecast range: $4.553 (conservative) to $4.790 (supply disruption) over 13 weeks vs current $4.668. Base scenario shows modest relief — conditions may improve.</p>
       </div>
     </div>
   </div>
   <div class="calc-box">
+  <div class="calc-box" style="background:#1a1a2e;color:white;border:none;">
+    <h4 style="color:white;margin-bottom:16px;">Refining &amp; Supply Signals</h4>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #FF9800;">
+        <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">3-2-1 Crack Spread &mdash; Refining Margin</span>
+        <div style="display:flex;align-items:baseline;gap:12px;margin-top:6px;margin-bottom:2px;">
+          <span style="color:white;font-size:1.4rem;font-weight:700;">$58.53<span style="font-size:0.85rem;font-weight:400;color:rgba(255,255,255,0.6);">/bbl</span></span>
+          <span style="font-size:0.8rem;color:rgba(255,255,255,0.5);">Wide margins — refiners are running hard. Diesel supply is healthy for now.</span>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.08);border-radius:6px;padding:14px;border-left:4px solid #2196F3;">
+        <span style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;">Barrel Counting &mdash; Crude Stocks &amp; SPR</span>
+        <p style="color:white;margin-top:4px;">Gasoline days supply is <strong>0.2 days above</strong> the five-year seasonal average. Gasoline stocks near the seasonal average — neutral supply picture.</p>
+      </div>
+    </div>
+  </div>
+  <div class="calc-box">
+    <h4>3-2-1 Crack Spread — Refining Margin History</h4>
+    <p class="calc-desc">Current: $58.53/bbl (+16.11 past 4 weeks). $25.81 above the 52-week average ($32.72/bbl). Wide margins — refiners are running hard. Diesel supply is healthy for now.</p>
+    <div class="chart-wrap"><canvas id="crackChart"></canvas></div>
+  </div>
     <h4>Regional Diesel Prices — This Week</h4>
     <p class="calc-desc">EIA PADD district prices. Updated weekly. Select your region on the Trucker and Fleet tabs to use your actual price.</p>
     <table>
@@ -353,9 +379,9 @@ tr:hover td{background:#f8f9fa;}
     <h4>Fuel Price Forward Range — 13 Weeks</h4>
     <p class="calc-desc">Three scenarios based on WTI crude trajectory. National average.</p>
     <div class="scenario-row">
-      <div class="sc g"><div class="sc-label">Conservative<br><small style="font-weight:400;color:#666;">WTI -15%</small></div><div class="sc-cost">$4.638/gal</div><div class="sc-margin">-0.030 vs current</div></div>
-      <div class="sc b"><div class="sc-label">Base Forecast<br><small style="font-weight:400;color:#666;">Current trajectory</small></div><div class="sc-cost">$4.736/gal</div><div class="sc-margin">+0.068 vs current</div></div>
-      <div class="sc r"><div class="sc-label">Supply Disruption<br><small style="font-weight:400;color:#666;">WTI +25%</small></div><div class="sc-cost">$4.899/gal</div><div class="sc-margin">+0.231 vs current</div></div>
+      <div class="sc g"><div class="sc-label">Conservative<br><small style="font-weight:400;color:#666;">WTI -15%</small></div><div class="sc-cost">$4.553/gal</div><div class="sc-margin">-0.115 vs current</div></div>
+      <div class="sc b"><div class="sc-label">Base Forecast<br><small style="font-weight:400;color:#666;">Current trajectory</small></div><div class="sc-cost">$4.642/gal</div><div class="sc-margin">-0.026 vs current</div></div>
+      <div class="sc r"><div class="sc-label">Supply Disruption<br><small style="font-weight:400;color:#666;">WTI +25%</small></div><div class="sc-cost">$4.790/gal</div><div class="sc-margin">+0.122 vs current</div></div>
     </div>
   </div>
   <div class="calc-box">
@@ -364,7 +390,7 @@ tr:hover td{background:#f8f9fa;}
     <div style="display:flex;flex-direction:column;">
       <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#FFF3E0;border-radius:8px 8px 0 0;border-bottom:2px solid #f5f5f5;">
         <span style="font-size:1.5rem;">🛢️</span>
-        <div><strong>WTI Crude Oil</strong> — $70.13/bbl (+5% YoY, as of Jun 30)<br><span style="color:#666;font-size:0.85rem;">The root signal. Everything downstream follows crude.</span></div>
+        <div><strong>WTI Crude Oil</strong> — $68.42/bbl (+0% YoY, as of Jul 02)<br><span style="color:#666;font-size:0.85rem;">The root signal. Everything downstream follows crude.</span></div>
       </div>
       <div style="padding:8px 16px;background:#fff;border-bottom:2px solid #f5f5f5;color:#999;font-size:0.82rem;font-style:italic;">↓ 1-2 weeks</div>
       <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#F3E5F5;border-bottom:2px solid #f5f5f5;">
@@ -379,7 +405,7 @@ tr:hover td{background:#f8f9fa;}
       <div style="padding:8px 16px;background:#fff;border-bottom:2px solid #f5f5f5;color:#999;font-size:0.82rem;font-style:italic;">↓ 4-8 weeks</div>
       <div style="display:flex;align-items:center;gap:16px;padding:16px;background:#E8F5E9;border-radius:0 0 8px 8px;">
         <span style="font-size:1.5rem;">🛒</span>
-        <div><strong>Grocery and Food Prices</strong> — GPPI 0.45 (Neutral — June reading, monthly)<br><span style="color:#666;font-size:0.85rem;">By the time this moves, operators with no early warning have already lost margin.</span></div>
+        <div><strong>Grocery and Food Prices</strong> — GPPI 0.65 (Moderate Pressure — June reading, monthly)<br><span style="color:#666;font-size:0.85rem;">By the time this moves, operators with no early warning have already lost margin.</span></div>
       </div>
     </div>
   </div>
@@ -510,7 +536,7 @@ tr:hover td{background:#f8f9fa;}
 </div>
 
 <script>
-var BASE=4.736, DIS=4.899, CONS=4.638, CURR=4.668, GPPI_PCT=1.34;
+var BASE=4.642, DIS=4.790, CONS=4.553, CURR=4.668, GPPI_PCT=1.96;
 var PADD={"Gulf Coast":4.283,"Midwest":4.583,"Rocky Mountain":4.602,"East Coast":4.758,"West Coast":5.528};
 var fuelChartObj=null, gppiChartObj=null;
 
@@ -562,10 +588,10 @@ function initCharts(){
   if(fuelChartObj)return;
   var histLabels=["2025-06-30","2025-07-07","2025-07-14","2025-07-21","2025-07-28","2025-08-04","2025-08-11","2025-08-18","2025-08-25","2025-09-01","2025-09-08","2025-09-15","2025-09-22","2025-09-29","2025-10-06","2025-10-13","2025-10-20","2025-10-27","2025-11-03","2025-11-10","2025-11-17","2025-11-24","2025-12-01","2025-12-08","2025-12-15","2025-12-22","2025-12-29","2026-01-05","2026-01-12","2026-01-19","2026-01-26","2026-02-02","2026-02-09","2026-02-16","2026-02-23","2026-03-02","2026-03-09","2026-03-16","2026-03-23","2026-03-30","2026-04-06","2026-04-13","2026-04-20","2026-04-27","2026-05-04","2026-05-11","2026-05-18","2026-05-25","2026-06-01","2026-06-08","2026-06-15","2026-06-22","2026-06-29"];
   var histData=[3.727,3.739,3.758,3.812,3.805,3.8,3.754,3.713,3.708,3.734,3.766,3.739,3.749,3.754,3.711,3.665,3.62,3.718,3.753,3.837,3.868,3.831,3.758,3.665,3.607,3.544,3.5,3.477,3.459,3.53,3.624,3.681,3.688,3.711,3.809,3.897,4.859,5.071,5.375,5.401,5.643,5.608,5.403,5.351,5.64,5.639,5.596,5.523,5.35,5.21,5.059,4.832,4.668];
-  var fcLabels=["2026-06-29","2026-07-06","2026-07-13","2026-07-20","2026-07-27","2026-08-03","2026-08-10","2026-08-17","2026-08-24","2026-08-31","2026-09-07","2026-09-14","2026-09-21"];
-  var fcBase=[null,4.745,4.738,4.736,4.735,4.735,4.735,4.735,4.735,4.735,4.735,4.735,4.735];
-  var fcCons=[null,4.745,4.632,4.63,4.629,4.628,4.628,4.628,4.628,4.628,4.628,4.628,4.628];
-  var fcDis=[null,4.745,4.916,4.913,4.912,4.912,4.912,4.912,4.912,4.912,4.912,4.912,4.912];
+  var fcLabels=["2026-07-06","2026-07-13","2026-07-20","2026-07-27","2026-08-03","2026-08-10","2026-08-17","2026-08-24","2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28"];
+  var fcBase=[null,4.646,4.643,4.642,4.641,4.641,4.641,4.641,4.641,4.641,4.641,4.641,4.641];
+  var fcCons=[null,4.646,4.546,4.545,4.544,4.544,4.544,4.544,4.544,4.544,4.544,4.544,4.544];
+  var fcDis=[null,4.646,4.805,4.803,4.803,4.803,4.803,4.803,4.803,4.803,4.803,4.803,4.803];
   var allLabels=histLabels.concat(fcLabels);
   var histPad=new Array(fcLabels.length).fill(null);
   var fcPad=new Array(histLabels.length).fill(null);
@@ -582,13 +608,29 @@ function initCharts(){
         tooltip:{callbacks:{label:function(ctx){return ctx.dataset.label+": $"+(ctx.raw?ctx.raw.toFixed(3):"—")+"/gal";}}}},
       scales:{
         x:{ticks:{maxTicksLimit:12,font:{size:10},callback:function(val){var d=new Date(this.getLabelForValue(val));return d.toLocaleDateString("en-US",{month:"short",year:"2-digit"});}},grid:{display:false}},
-        y:{ticks:{font:{size:10},callback:function(val){return"$"+val.toFixed(2);}},grid:{color:"rgba(0,0,0,0.05)"}}
+        y:{ticks:{font:{size:10},callback:function(val){return"$"+val.toFixed(2);}},grid:{color:"rgba(0,0,0,0.05)"},suggestedMin:2.27,suggestedMax:5.91}
       }
     }
   });
   var gppiLabels=["2025-06-01","2025-07-01","2025-08-01","2025-09-01","2025-10-01","2025-11-01","2025-12-01","2026-01-01","2026-02-01","2026-03-01","2026-04-01","2026-05-01","2026-06-01"];
-  var gppiData=[-0.097,-0.048,0.067,0.116,0.028,0.051,-0.044,-0.431,0.008,0.838,1.143,1.27,0.448];
+  var gppiData=[-0.097,-0.048,0.067,0.116,0.028,0.051,-0.044,-0.431,0.008,0.838,1.143,1.27,0.652];
   var lastNonZero=gppiData.length;while(lastNonZero>0&&(gppiData[lastNonZero-1]===0||gppiData[lastNonZero-1]===null))lastNonZero--;gppiLabels=gppiLabels.slice(0,lastNonZero);gppiData=gppiData.slice(0,lastNonZero);
+  var crackLabels=["2018-01-08","2018-01-15","2018-01-22","2018-01-29","2018-02-05","2018-02-12","2018-02-19","2018-02-26","2018-03-05","2018-03-12","2018-03-19","2018-03-26","2018-04-02","2018-04-09","2018-04-16","2018-04-23","2018-04-30","2018-05-07","2018-05-14","2018-05-21","2018-05-28","2018-06-04","2018-06-11","2018-06-18","2018-06-25","2018-07-02","2018-07-09","2018-07-16","2018-07-23","2018-07-30","2018-08-06","2018-08-13","2018-08-20","2018-08-27","2018-09-03","2018-09-10","2018-09-17","2018-09-24","2018-10-01","2018-10-08","2018-10-15","2018-10-22","2018-10-29","2018-11-05","2018-11-12","2018-11-19","2018-11-26","2018-12-03","2018-12-10","2018-12-17","2018-12-24","2018-12-31","2019-01-07","2019-01-14","2019-01-21","2019-01-28","2019-02-04","2019-02-11","2019-02-18","2019-02-25","2019-03-04","2019-03-11","2019-03-18","2019-03-25","2019-04-01","2019-04-08","2019-04-15","2019-04-22","2019-04-29","2019-05-06","2019-05-13","2019-05-20","2019-05-27","2019-06-03","2019-06-10","2019-06-17","2019-06-24","2019-07-01","2019-07-08","2019-07-15","2019-07-22","2019-07-29","2019-08-05","2019-08-12","2019-08-19","2019-08-26","2019-09-02","2019-09-09","2019-09-16","2019-09-23","2019-09-30","2019-10-07","2019-10-14","2019-10-21","2019-10-28","2019-11-04","2019-11-11","2019-11-18","2019-11-25","2019-12-02","2019-12-09","2019-12-16","2019-12-23","2019-12-30","2020-01-06","2020-01-13","2020-01-20","2020-01-27","2020-02-03","2020-02-10","2020-02-17","2020-02-24","2020-03-02","2020-03-09","2020-03-16","2020-03-23","2020-03-30","2020-04-06","2020-04-13","2020-04-20","2020-04-27","2020-05-04","2020-05-11","2020-05-18","2020-05-25","2020-06-01","2020-06-08","2020-06-15","2020-06-22","2020-06-29","2020-07-06","2020-07-13","2020-07-20","2020-07-27","2020-08-03","2020-08-10","2020-08-17","2020-08-24","2020-08-31","2020-09-07","2020-09-14","2020-09-21","2020-09-28","2020-10-05","2020-10-12","2020-10-19","2020-10-26","2020-11-02","2020-11-09","2020-11-16","2020-11-23","2020-11-30","2020-12-07","2020-12-14","2020-12-21","2020-12-28","2021-01-04","2021-01-11","2021-01-18","2021-01-25","2021-02-01","2021-02-08","2021-02-15","2021-02-22","2021-03-01","2021-03-08","2021-03-15","2021-03-22","2021-03-29","2021-04-05","2021-04-12","2021-04-19","2021-04-26","2021-05-03","2021-05-10","2021-05-17","2021-05-24","2021-05-31","2021-06-07","2021-06-14","2021-06-21","2021-06-28","2021-07-05","2021-07-12","2021-07-19","2021-07-26","2021-08-02","2021-08-09","2021-08-16","2021-08-23","2021-08-30","2021-09-06","2021-09-13","2021-09-20","2021-09-27","2021-10-04","2021-10-11","2021-10-18","2021-10-25","2021-11-01","2021-11-08","2021-11-15","2021-11-22","2021-11-29","2021-12-06","2021-12-13","2021-12-20","2021-12-27","2022-01-03","2022-01-10","2022-01-17","2022-01-24","2022-01-31","2022-02-07","2022-02-14","2022-02-21","2022-02-28","2022-03-07","2022-03-14","2022-03-21","2022-03-28","2022-04-04","2022-04-11","2022-04-18","2022-04-25","2022-05-02","2022-05-09","2022-05-16","2022-05-23","2022-05-30","2022-06-06","2022-06-13","2022-06-20","2022-06-27","2022-07-04","2022-07-11","2022-07-18","2022-07-25","2022-08-01","2022-08-08","2022-08-15","2022-08-22","2022-08-29","2022-09-05","2022-09-12","2022-09-19","2022-09-26","2022-10-03","2022-10-10","2022-10-17","2022-10-24","2022-10-31","2022-11-07","2022-11-14","2022-11-21","2022-11-28","2022-12-05","2022-12-12","2022-12-19","2022-12-26","2023-01-02","2023-01-09","2023-01-16","2023-01-23","2023-01-30","2023-02-06","2023-02-13","2023-02-20","2023-02-27","2023-03-06","2023-03-13","2023-03-20","2023-03-27","2023-04-03","2023-04-10","2023-04-17","2023-04-24","2023-05-01","2023-05-08","2023-05-15","2023-05-22","2023-05-29","2023-06-05","2023-06-12","2023-06-19","2023-06-26","2023-07-03","2023-07-10","2023-07-17","2023-07-24","2023-07-31","2023-08-07","2023-08-14","2023-08-21","2023-08-28","2023-09-04","2023-09-11","2023-09-18","2023-09-25","2023-10-02","2023-10-09","2023-10-16","2023-10-23","2023-10-30","2023-11-06","2023-11-13","2023-11-20","2023-11-27","2023-12-04","2023-12-11","2023-12-18","2023-12-25","2024-01-01","2024-01-08","2024-01-15","2024-01-22","2024-01-29","2024-02-05","2024-02-12","2024-02-19","2024-02-26","2024-03-04","2024-03-11","2024-03-18","2024-03-25","2024-04-01","2024-04-08","2024-04-15","2024-04-22","2024-04-29","2024-05-06","2024-05-13","2024-05-20","2024-05-27","2024-06-03","2024-06-10","2024-06-17","2024-06-24","2024-07-01","2024-07-08","2024-07-15","2024-07-22","2024-07-29","2024-08-05","2024-08-12","2024-08-19","2024-08-26","2024-09-02","2024-09-09","2024-09-16","2024-09-23","2024-09-30","2024-10-07","2024-10-14","2024-10-21","2024-10-28","2024-11-04","2024-11-11","2024-11-18","2024-11-25","2024-12-02","2024-12-09","2024-12-16","2024-12-23","2024-12-30","2025-01-06","2025-01-13","2025-01-20","2025-01-27","2025-02-03","2025-02-10","2025-02-17","2025-02-24","2025-03-03","2025-03-10","2025-03-17","2025-03-24","2025-03-31","2025-04-07","2025-04-14","2025-04-21","2025-04-28","2025-05-05","2025-05-12","2025-05-19","2025-05-26","2025-06-02","2025-06-09","2025-06-16","2025-06-23","2025-06-30","2025-07-07","2025-07-14","2025-07-21","2025-07-28","2025-08-04","2025-08-11","2025-08-18","2025-08-25","2025-09-01","2025-09-08","2025-09-15","2025-09-22","2025-09-29","2025-10-06","2025-10-13","2025-10-20","2025-10-27","2025-11-03","2025-11-10","2025-11-17","2025-11-24","2025-12-01","2025-12-08","2025-12-15","2025-12-22","2025-12-29","2026-01-05","2026-01-12","2026-01-19","2026-01-26","2026-02-02","2026-02-09","2026-02-16","2026-02-23","2026-03-02","2026-03-09","2026-03-16","2026-03-23","2026-03-30","2026-04-06","2026-04-13","2026-04-20","2026-04-27","2026-05-04","2026-05-11","2026-05-18","2026-05-25","2026-06-01","2026-06-08","2026-06-15","2026-06-22","2026-06-29"];
+  var crackData=[17.06,18.2,18.6,16.01,14.96,13.95,14.73,13.58,12.19,14.53,15.48,16.97,16.72,17.49,18.82,19.63,18.01,19.9,21.14,21.54,22.53,21.44,18.57,16.58,15.5,14.2,16.19,15.71,21.15,19.43,19.82,19.26,19.74,21.48,20.79,18.52,18.2,19.88,19.65,17.56,18.68,17.67,16.39,16.8,18.55,17.12,16.97,16.92,16.37,16.68,16.16,16.21,15.14,14.09,12.23,12.01,15.29,17.85,17.71,21.44,20.47,20.06,21.56,18.38,20.94,22.06,23.23,23.09,21.87,21.02,21.62,21.5,20.19,18.15,20.3,20.74,21.91,22.74,22.2,22.01,22.44,20,17.38,16.42,17.54,16.15,17.78,18.53,19.96,20.15,20.32,21.6,22.56,20.89,19.77,18.19,17.57,17.79,16.85,15.08,14.94,16.4,16.61,15.72,15.35,14.32,13.49,13.7,15.99,16.84,17.06,16.29,16.79,10.35,11.36,14.45,1.7,7.23,12.35,10.46,10.06,11.18,6.96,6.07,4.02,6.77,7.94,9.97,7.12,9.68,11.09,9.32,10.53,8.33,8.27,9.01,9.27,9.29,9.73,9.53,10.42,10.02,10.94,10.65,9.18,8.22,8.84,9.3,8.01,8.54,9.51,8.27,9.83,10.99,11.15,11.49,12.76,12.36,12.57,13.29,12.28,11.69,15.29,15.63,16.6,21.63,14.9,16,17.94,18.65,18,16.89,18.41,20.02,20.85,19.21,18.66,17.52,15.46,14.19,15.24,16.2,16.22,18.04,19.31,20.56,21.54,21.09,17.7,22.17,24.11,22.5,20.67,19.07,21.4,21.5,23.77,21.25,20.32,19.98,18.47,18.05,19.74,18.06,20.24,19.8,20.27,19.3,19.92,20.61,20.16,22.44,22.92,25.68,22.77,24.04,32.11,28.39,33.91,33.33,33.4,36.93,41.57,39.7,54.94,63.25,70.22,52.15,54.52,67.23,57.63,59.71,62.12,50.42,45.48,46.85,43.98,42.88,39.05,38.6,40.46,40.36,34.93,35.65,30.36,35.04,40.83,50.04,60.94,55.12,63.97,61.63,55.98,45.71,41.08,32.94,26.21,29.51,32.42,36.91,33.51,37.99,41.51,38.56,32.22,31.5,28.97,27.98,32.97,30.24,34.53,36.98,31.08,35.25,33.58,28.46,27.98,27.6,29.6,31.96,34.69,35.63,38.91,38.75,33.16,35.17,32.83,30.69,36.2,38.1,36.1,41.81,41.24,45.25,29.67,38.29,38.5,34.18,31.9,24.56,28.26,26.73,23.76,14.61,26.07,27.84,30.24,25.49,26.56,28.03,23.94,22.78,23.16,24.57,25.04,26.69,24.19,28.96,24.27,23.97,24.11,22.41,26.49,27.19,23.71,27.01,27.46,25.58,26.94,25.83,23.24,24.03,24.31,22.03,21.68,21.17,22.21,21.26,22.49,19.84,18.91,21.65,20.27,20.43,17.65,18.47,16.69,11.78,10.08,10.13,11.19,11.69,12.61,17.94,18.98,17.82,18.95,19.19,19.25,18.16,15.77,16.7,16.73,15.38,16.78,17.05,18.94,19.45,19.77,23.08,22.47,20.85,15.18,17.1,16.53,17.87,17.77,18.39,16.67,17.05,20.15,18.83,20.83,20.44,21.04,18.93,17.19,21.23,24.38,22.7,23.51,25.29,24.85,24.55,21.59,23.78,24.55,27.62,29.23,23.85,23.61,23.21,23.14,20.64,20.86,22.38,23.82,23.76,27.52,29.74,26.74,25.21,23.18,21.15,19.75,20.12,25.36,26.02,27.32,28.65,29.44,28.08,22.56,24.23,26.7,36.24,41.86,57.67,52.88,39.76,36.7,45.84,54.73,50.45,53.49,52.44,49.97,46.36,42.42,42.2,44.88,56.33,58.53];
+  new Chart(document.getElementById("crackChart"),{
+    type:"line",
+    data:{labels:crackLabels,datasets:[
+      {label:"3-2-1 Crack Spread",data:crackData,borderColor:"#FF9800",borderWidth:2,pointRadius:0,tension:0.3,fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:function(ctx){return"$"+ctx.raw.toFixed(2)+"/bbl";}}}},
+      scales:{
+        x:{ticks:{maxTicksLimit:12,font:{size:10},callback:function(val){var d=new Date(this.getLabelForValue(val));return d.toLocaleDateString("en-US",{month:"short",year:"2-digit"});}},grid:{display:false}},
+        y:{ticks:{font:{size:10},callback:function(val){return"$"+val.toFixed(0);}},grid:{color:"rgba(0,0,0,0.05)"}}
+      }
+    }
+  });
   gppiChartObj=new Chart(document.getElementById("gppiChart"),{
     type:"line",
     data:{labels:gppiLabels,datasets:[{

@@ -94,7 +94,36 @@ monthly_series <- list(
   pull_monthly_to_weekly("CAPG211S",        "refinery_capacity",  weekly_dates)
 )
 
-all_series <- c(compact(weekly_series), list(wti_series), compact(monthly_series))
+cat("\nPulling spot prices for real 3-2-1 crack spread...\n")
+pull_daily_to_weekly <- function(series_id, series_name, weekly_dates) {
+  cat(sprintf("  Pulling %s (%s) [daily -> weekly]...\n", series_name, series_id))
+  tryCatch({
+    daily <- fredr(series_id = series_id,
+                   observation_start = START_DATE,
+                   observation_end   = END_DATE,
+                   frequency         = "d") %>%
+      select(date, value) %>%
+      rename(!!series_name := value) %>%
+      mutate(date = as.Date(date)) %>%
+      filter(!is.na(.data[[series_name]]))
+    daily %>%
+      mutate(week = floor_date(date, "week", week_start = 1)) %>%
+      group_by(week) %>%
+      slice_max(date, n = 1) %>%
+      ungroup() %>%
+      select(date = week, all_of(series_name))
+  }, error = function(e) {
+    warning(sprintf("Failed %s: %s", series_id, e$message))
+    NULL
+  })
+}
+
+spot_series <- list(
+  pull_daily_to_weekly("DGASNYH",  "gas_spot_nyh", weekly_dates),  # NY Harbor conventional gas $/gal daily->weekly
+  pull_daily_to_weekly("DHOILNYH", "ho_spot_nyh",  weekly_dates)   # NY Harbor heating oil $/gal daily->weekly
+)
+
+all_series <- c(compact(weekly_series), list(wti_series), compact(monthly_series), compact(spot_series))
 all_series <- compact(all_series)
 
 fuel_weekly <- reduce(all_series, full_join, by = "date") %>%
@@ -111,7 +140,15 @@ fuel_weekly <- fuel_weekly %>%
     wti_lag2  = lag(wti_crude, 2),
     wti_lag4  = lag(wti_crude, 4),
     gas_crack_spread    = gasoline_retail - (wti_crude / 42),
-    diesel_crack_spread = diesel_retail   - (wti_crude / 42),
+    # Real 3-2-1 crack spread: ((2*gas_spot + 1*HO_spot) * 42 - 3*WTI) / 3, $/bbl
+    # Falls back to retail proxy if spot prices unavailable
+    diesel_crack_spread = if ("gas_spot_nyh" %in% names(.) && "ho_spot_nyh" %in% names(.)) {
+      ifelse(!is.na(gas_spot_nyh) & !is.na(ho_spot_nyh) & !is.na(wti_crude),
+             ((2 * gas_spot_nyh + 1 * ho_spot_nyh) * 42 - 3 * wti_crude) / 3,
+             NA_real_)
+    } else {
+      diesel_retail - (wti_crude / 42)
+    },
     week_of_year = as.integer(format(date, "%V")),
     gas_wow_chg    = gasoline_retail - lag(gasoline_retail, 1),
     gas_yoy_chg    = gasoline_retail - lag(gasoline_retail, 52),
