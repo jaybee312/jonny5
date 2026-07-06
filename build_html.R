@@ -48,9 +48,14 @@ watch1 <- sprintf("WTI crude at $%.2f/bbl — %s year over year. %s", curr_wti,
   ifelse(!is.na(wti_yoy) && wti_yoy > 0, "Prices elevated vs last year — monitor for further movement.",
          "Prices below last year — favorable conditions.")))
 
-# 2a. Crack spread — real 3-2-1 from cache (RBOB + HO spot via EIA) -----------
-# Latest week may be NA if EIA hasn't posted yet; fill with live proxy as fallback
-crack_spread_val  <- as.numeric(latest_fuel$diesel_crack_spread)
+# 2a. Crack spread — real 3-2-1 from cache -------------------------------------
+# Real values start from ~Jun 2025 when DGASNYH/DHOILNYH were added
+# Use date cutoff to exclude old proxy values
+fuel_sorted       <- fuel_weekly[order(fuel_weekly$date), ]
+crack_hist        <- fuel_sorted[!is.na(fuel_sorted$diesel_crack_spread) &
+                                 fuel_sorted$date >= as.Date("2025-06-01"),
+                                 c("date", "diesel_crack_spread")]
+crack_spread_val  <- if (nrow(crack_hist) > 0) tail(crack_hist$diesel_crack_spread, 1) else NA_real_
 if (is.na(crack_spread_val)) crack_spread_val <- round(curr_d - (curr_wti / 42), 2)
 
 crack_spread_fmt  <- if (!is.na(crack_spread_val)) sprintf("$%.2f", crack_spread_val) else "data pending"
@@ -66,12 +71,10 @@ crack_note        <- if (!is.na(crack_spread_val)) {
 } else ""
 
 # Sparkline data — last 10 weeks, fill latest NA with live computed value
-fuel_sorted       <- fuel_weekly[order(fuel_weekly$date), ]
 spark_df          <- tail(fuel_sorted[, c("date", "diesel_crack_spread", "diesel_retail")], 10)
 spark_df$diesel_crack_spread[is.na(spark_df$diesel_crack_spread)] <- crack_spread_val
 
-# Full crack spread history for chart — drop NAs
-crack_hist          <- fuel_sorted[!is.na(fuel_sorted$diesel_crack_spread), c("date", "diesel_crack_spread")]
+# Chart tokens — crack_hist already filtered to real values above
 crack_hist_labels   <- paste0('["', paste(format(crack_hist$date, "%Y-%m-%d"), collapse='","'), '"]')
 crack_hist_values   <- paste0("[", paste(round(crack_hist$diesel_crack_spread, 2), collapse=","), "]")
 
@@ -93,6 +96,77 @@ crack_insight <- sprintf(
 # Forecast y-axis zoom — bracket history min/max with small padding
 forecast_ymin <- round(min(fuel_sorted$diesel_retail, na.rm=TRUE) - 0.10, 2)
 forecast_ymax <- round(max(fuel_sorted$diesel_retail, na.rm=TRUE) + 0.10, 2)
+
+# RDI signal — Real Disposable Income MoM change and direction
+# Monthly series lags 6-8 weeks — use last non-NA observation
+rdi_series  <- fuel_sorted[!is.na(fuel_sorted$real_disp_income), c("date", "real_disp_income")]
+rdi_current <- if (nrow(rdi_series) >= 1) tail(rdi_series$real_disp_income, 1) else NA_real_
+rdi_prev    <- if (nrow(rdi_series) >= 2) tail(rdi_series$real_disp_income, 2)[1] else NA_real_
+rdi_mom     <- if (!is.na(rdi_current) && !is.na(rdi_prev)) round((rdi_current - rdi_prev) / rdi_prev * 100, 2) else NA_real_
+rdi_level   <- if (!is.na(rdi_current)) {
+  rdi_asof <- format(tail(rdi_series$date, 1), "%b %Y")
+  sprintf("$%.0fB <span style='font-size:0.75rem;font-weight:400;color:rgba(255,255,255,0.45);'>as of %s</span>", rdi_current, rdi_asof)
+} else "data pending"
+rdi_change  <- if (!is.na(rdi_mom)) sprintf("%+.2f%% MoM", rdi_mom) else ""
+rdi_signal  <- if (!is.na(rdi_mom)) {
+  direction <- if (rdi_mom > 0.3)       "Rising"
+               else if (rdi_mom < -0.3) "Softening"
+               else                      "Flat"
+  implication <- if (rdi_mom > 0.3)       "demand likely strengthening — reorder point may be too low."
+                 else if (rdi_mom < -0.3) "demand headwinds building — watch for overstock risk."
+                 else                      "demand conditions stable. Reorder math holds."
+  sprintf("%s at $%.0fB (%s as of %s) — %s",
+          direction, rdi_current, rdi_change,
+          format(tail(rdi_series$date, 1), "%b %Y"),
+          implication)
+} else "Pending latest release."
+
+# YoY margin commentary — RDI YoY vs diesel YoY
+rdi_yoy <- if (nrow(rdi_series) >= 2) {
+  # Find the observation closest to 1 year ago
+  target_date <- tail(rdi_series$date, 1) - 365
+  rdi_yr_ago  <- rdi_series$real_disp_income[which.min(abs(rdi_series$date - target_date))]
+  round((rdi_current - rdi_yr_ago) / rdi_yr_ago * 100, 1)
+} else NA_real_
+
+# diesel_yoy_chg is $/gal change vs 52 weeks ago — convert to percent, sign preserved
+diesel_yr_ago  <- curr_d - as.numeric(latest_fuel$diesel_yoy_chg)
+diesel_yoy_pct <- if (!is.na(diesel_yr_ago) && diesel_yr_ago > 0) {
+  round(as.numeric(latest_fuel$diesel_yoy_chg) / diesel_yr_ago * 100, 1)
+} else NA_real_
+
+rdi_yoy_fmt    <- if (!is.na(rdi_yoy))        sprintf("%+.1f%% YoY", rdi_yoy)        else "data pending"
+diesel_yoy_fmt <- if (!is.na(diesel_yoy_pct)) sprintf("%+.1f%% YoY", diesel_yoy_pct) else "data pending"
+
+margin_signal <- if (!is.na(rdi_yoy) && !is.na(diesel_yoy_pct)) {
+  if      (rdi_yoy >= 0 && diesel_yoy_pct <= 0) "Margin Tailwind"
+  else if (rdi_yoy >= 0 && diesel_yoy_pct >  0) "Mixed"
+  else if (rdi_yoy <  0 && diesel_yoy_pct >  0) "Margin Squeeze"
+  else                                            "Costs Easing"
+} else "Pending"
+
+margin_detail <- if (!is.na(rdi_yoy) && !is.na(diesel_yoy_pct)) {
+  if      (rdi_yoy >= 0 && diesel_yoy_pct <= 0) "consumer wallets expanding while transportation costs fall."
+  else if (rdi_yoy >= 0 && diesel_yoy_pct >  0) "income rising but transportation costs rising with it."
+  else if (rdi_yoy <  0 && diesel_yoy_pct >  0) "consumer purchasing power falling while transportation costs rise."
+  else                                            "watch whether income recovers before reordering aggressively."
+} else ""
+
+rdi_margin_commentary <- sprintf("Real income %s | Diesel %s. %s", rdi_yoy_fmt, diesel_yoy_fmt, margin_signal)
+
+# Dual-axis chart — full RDI + diesel history from 2018, aligned on date
+# Join RDI series with diesel from fuel_weekly on date
+chart_df <- merge(
+  rdi_series,
+  fuel_sorted[!is.na(fuel_sorted$diesel_retail), c("date", "diesel_retail")],
+  by = "date"
+)
+chart_df <- chart_df[order(chart_df$date), ]
+
+rdi_hist_labels     <- paste0('["', paste(format(chart_df$date, "%Y-%m-%d"), collapse='","'), '"]')
+rdi_hist_values     <- paste0("[", paste(round(chart_df$real_disp_income, 0), collapse=","), "]")
+diesel_aligned_values <- paste0("[", paste(round(chart_df$diesel_retail, 3), collapse=","), "]")
+
 # gas_inv_vs_avg: gasoline days supply vs 5-year average (distillate stub pending)
 # crude_supply_signal: directional signal already computed in ingest
 dist_vs_avg   <- as.numeric(latest_fuel$gas_inv_vs_avg)
@@ -180,8 +254,16 @@ vals <- c(
   CRACK_HIST_VALUES   = crack_hist_values,
   FORECAST_YMIN       = as.character(forecast_ymin),
   FORECAST_YMAX       = as.character(forecast_ymax),
-  CRUDE_VS_AVG  = crude_vs_avg_txt,
-  SUPPLY_NOTE   = supply_note
+  RDI_MARGIN_COMMENTARY   = rdi_margin_commentary,
+  RDI_YOY                 = rdi_yoy_fmt,
+  DIESEL_YOY              = diesel_yoy_fmt,
+  MARGIN_SIGNAL           = margin_signal,
+  MARGIN_DETAIL           = margin_detail,
+  RDI_HIST_LABELS         = rdi_hist_labels,
+  RDI_HIST_VALUES         = rdi_hist_values,
+  DIESEL_ALIGNED_VALUES   = diesel_aligned_values,
+  CRUDE_VS_AVG        = crude_vs_avg_txt,
+  SUPPLY_NOTE         = supply_note
 )
 
 # 4. Fill the template --------------------------------------------------------

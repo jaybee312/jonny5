@@ -91,7 +91,8 @@ monthly_series <- list(
   pull_monthly_to_weekly("CPIENGSL",        "cpi_energy",         weekly_dates),
   pull_monthly_to_weekly("CUSR0000SETB01",  "cpi_gasoline",       weekly_dates),
   pull_monthly_to_weekly("UMCSENT",         "consumer_sentiment", weekly_dates),
-  pull_monthly_to_weekly("CAPG211S",        "refinery_capacity",  weekly_dates)
+  pull_monthly_to_weekly("CAPG211S",        "refinery_capacity",  weekly_dates),
+  pull_monthly_to_weekly("DSPIC96",         "real_disp_income",   weekly_dates)  # Real Disposable Personal Income (chained 2017$, billions)
 )
 
 cat("\nPulling spot prices for real 3-2-1 crack spread...\n")
@@ -119,8 +120,8 @@ pull_daily_to_weekly <- function(series_id, series_name, weekly_dates) {
 }
 
 spot_series <- list(
-  pull_daily_to_weekly("DGASNYH",  "gas_spot_nyh", weekly_dates),  # NY Harbor conventional gas $/gal daily->weekly
-  pull_daily_to_weekly("DHOILNYH", "ho_spot_nyh",  weekly_dates)   # NY Harbor heating oil $/gal daily->weekly
+  pull_daily_to_weekly("DGASNYH",  "gas_spot_nyh", weekly_dates),
+  pull_daily_to_weekly("DHOILNYH", "ho_spot_nyh",  weekly_dates)
 )
 
 all_series <- c(compact(weekly_series), list(wti_series), compact(monthly_series), compact(spot_series))
@@ -140,15 +141,11 @@ fuel_weekly <- fuel_weekly %>%
     wti_lag2  = lag(wti_crude, 2),
     wti_lag4  = lag(wti_crude, 4),
     gas_crack_spread    = gasoline_retail - (wti_crude / 42),
-    # Real 3-2-1 crack spread: ((2*gas_spot + 1*HO_spot) * 42 - 3*WTI) / 3, $/bbl
-    # Falls back to retail proxy if spot prices unavailable
-    diesel_crack_spread = if ("gas_spot_nyh" %in% names(.) && "ho_spot_nyh" %in% names(.)) {
-      ifelse(!is.na(gas_spot_nyh) & !is.na(ho_spot_nyh) & !is.na(wti_crude),
-             ((2 * gas_spot_nyh + 1 * ho_spot_nyh) * 42 - 3 * wti_crude) / 3,
-             NA_real_)
-    } else {
-      diesel_retail - (wti_crude / 42)
-    },
+    diesel_crack_spread = ifelse(
+      !is.na(gas_spot_nyh) & !is.na(ho_spot_nyh) & !is.na(wti_crude),
+      ((2 * gas_spot_nyh + 1 * ho_spot_nyh) * 42 - 3 * wti_crude) / 3,
+      NA_real_
+    ),
     week_of_year = as.integer(format(date, "%V")),
     gas_wow_chg    = gasoline_retail - lag(gasoline_retail, 1),
     gas_yoy_chg    = gasoline_retail - lag(gasoline_retail, 52),
